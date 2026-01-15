@@ -14,8 +14,8 @@ export default function Footer() {
             Weaving tradition with modern elegance. Premium handwoven sarees crafted for the woman of today.
           </p>
           <div className="lux-social-row">
-            <a href="https://www.instagram.com/sridharfashionskanchipuram?igsh=ZHpseDAzMzBxcWg%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="lux-social-btn"><FaInstagram /></a>
-            <a href="https://wa.me/918182405059" target="_blank" rel="noopener noreferrer" className="lux-social-btn"><FaWhatsapp /></a>
+            <a href="https://www.instagram.com/sridharfashionskanchipuram?igsh=ZHpseDAzMzBxcWg%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="lux-social-btn" aria-label="Visit us on Instagram"><FaInstagram /></a>
+            <a href="https://wa.me/918182405059" target="_blank" rel="noopener noreferrer" className="lux-social-btn" aria-label="Chat with us on WhatsApp"><FaWhatsapp /></a>
           </div>
         </div>
 

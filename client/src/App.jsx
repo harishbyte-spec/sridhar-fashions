@@ -1,51 +1,50 @@
 // App.jsx
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
-import Home from "./pages/Home";
-import Shop from "./pages/Shop";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Navbar from "./components/HomePage/Navbar";
-import Footer from "./components/HomePage/Footer";
-import ProductDetails from "./components/productCard/ProductDetails";
-import Favourites from "./pages/Favourites";
-import ScrollToTop from "./components/ScrollToTop";
+// Lazy loading components
+const Home = lazy(() => import("./pages/Home"));
+const Shop = lazy(() => import("./pages/Shop"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Navbar = lazy(() => import("./components/HomePage/Navbar"));
+const Footer = lazy(() => import("./components/HomePage/Footer"));
+const ProductDetails = lazy(() => import("./components/productCard/ProductDetails"));
+const Favourites = lazy(() => import("./pages/Favourites"));
+const ScrollToTop = lazy(() => import("./components/ScrollToTop"));
 
 // admin
-import AdminDashboard from "./admin/AdminDashboard";
-import AdminUsers from "./admin/AdminUsers";
-import AdminOrders from "./admin/AdminOrders";
-import AddProduct from "./admin/AddProduct";
-import AdminRoute from "./routes/AdminRoute";
-import AdminProductList from "./admin/AdminProductList";
-import EditProduct from "./admin/EditProduct";
-import AdminProducts from "./admin/AdminProducts";
-import Templates from "./admin/Templates";
-import Categories from "./admin/Categories";
-import Collections from "./admin/Collections";
-import Fabrics from "./admin/Fabrics";
-import BodyTemplates from "./admin/BodyTemplates";
-import BorderTemplates from "./admin/BorderTemplates";
-import PalluTemplates from "./admin/PalluTemplates";
-import BlouseTemplates from "./admin/BlouseTemplates";
-import Origins from "./admin/Origins";
-import JariTypes from "./admin/JariTypes";
-import ManageOccasions from "./admin/ManageOccasions";
-import ManageHome from "./admin/ManageHome";
-
-
+const AdminDashboard = lazy(() => import("./admin/AdminDashboard"));
+const AdminUsers = lazy(() => import("./admin/AdminUsers"));
+const AdminOrders = lazy(() => import("./admin/AdminOrders"));
+const AddProduct = lazy(() => import("./admin/AddProduct"));
+const AdminRoute = lazy(() => import("./routes/AdminRoute"));
+const AdminProductList = lazy(() => import("./admin/AdminProductList"));
+const EditProduct = lazy(() => import("./admin/EditProduct"));
+const AdminProducts = lazy(() => import("./admin/AdminProducts"));
+const Templates = lazy(() => import("./admin/Templates"));
+const Categories = lazy(() => import("./admin/Categories"));
+const Collections = lazy(() => import("./admin/Collections"));
+const Fabrics = lazy(() => import("./admin/Fabrics"));
+const BodyTemplates = lazy(() => import("./admin/BodyTemplates"));
+const BorderTemplates = lazy(() => import("./admin/BorderTemplates"));
+const PalluTemplates = lazy(() => import("./admin/PalluTemplates"));
+const BlouseTemplates = lazy(() => import("./admin/BlouseTemplates"));
+const Origins = lazy(() => import("./admin/Origins"));
+const JariTypes = lazy(() => import("./admin/JariTypes"));
+const ManageOccasions = lazy(() => import("./admin/ManageOccasions"));
+const ManageHome = lazy(() => import("./admin/ManageHome"));
 
 // NEW shared login
-import Login from "./userLogin/Login";
-import Register from "./userLogin/Register";
-import Profile from "./pages/Profile";
-import Story from "./pages/Story";
-import Privacy from "./pages/Privacy";
-import TermsOfService from "./pages/TermsOfService";
+const Login = lazy(() => import("./userLogin/Login"));
+const Register = lazy(() => import("./userLogin/Register"));
+const Profile = lazy(() => import("./pages/Profile"));
+const Story = lazy(() => import("./pages/Story"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 import { CurrencyProvider } from "./context/CurrencyContext";
 import { Toaster } from "react-hot-toast";
-import Intro from "./components/IntroAnimation/Intro";
+const Intro = lazy(() => import("./components/IntroAnimation/Intro"));
 
 
 export default function App() {
@@ -59,7 +58,8 @@ export default function App() {
       <Toaster position="top-right" reverseOrder={false} />
 
       <div className={isHome ? "app-main-content home-no-pad" : "app-main-content"}>
-        <Routes>
+        <Suspense fallback={<div style={{height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}>Loading...</div>}>
+          <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/about" element={<About />} />
@@ -236,7 +236,8 @@ export default function App() {
           />
           {/* Temporary Intro Preview Route */}
           <Route path="/intro-test" element={<Intro onComplete={() => window.location.reload()} />} />
-        </Routes>
+          </Routes>
+        </Suspense>
       </div>
 
 

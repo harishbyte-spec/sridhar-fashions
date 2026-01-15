@@ -216,7 +216,7 @@ export default function ProductDetails() {
                       <div className="play-icon-small">▶</div>
                     </div>
                   ) : (
-                    <img src={img.src} alt={`thumb-${idx}`} className="pd-thumb" />
+                    <img src={img.src} alt={`Thumbnail ${idx + 1}`} className="pd-thumb" loading="lazy" width="60" height="80" />
                   )}
                 </div>
               ))}
@@ -235,7 +235,7 @@ export default function ProductDetails() {
                   controls={false}
                 />
               ) : (
-                <img src={activeImgObj.src} className="pd-main-media" alt="Main View" />
+                <img src={activeImgObj.src} className="pd-main-media" alt={`${product.title} - View ${activeImgObj.tag || 'Main'}`} fetchpriority="high" width="500" height="700" />
               )}
               {activeImgObj.tag && activeImgObj.tag !== "View" && activeImgObj.tag !== "Main" && (
                 <div className="pd-img-tag">{activeImgObj.tag}</div>
