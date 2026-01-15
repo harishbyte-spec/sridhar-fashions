@@ -55,9 +55,9 @@ export default function FeaturedProducts() {
           const mainImg = item.thumbnail || (item.colors && item.colors[0]?.images?.[0]) || "/images/placeholder-saree.jpg";
           return (
             <SwiperSlide key={item._id}>
-              <Link to={`/product/${item._id}`} className="luxury-card">
+              <Link to={`/product/${item._id}`} className="luxury-card" aria-label={`View details of ${item.title}`}>
                 <div className="luxury-img-wrap">
-                  <img src={mainImg} alt={item.title} />
+                  <img src={mainImg} alt={item.title} loading="lazy" width="300" height="400" />
                   <div className="luxury-overlay-btn">
                     <span>Explore Details</span>
                   </div>

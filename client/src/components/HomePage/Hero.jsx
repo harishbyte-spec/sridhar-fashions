@@ -41,10 +41,10 @@ const Hero = () => {
           </p>
 
           <div className="hero-actions">
-            <Link to="/shop" className="hero-btn hero-btn-primary">
+            <Link to="/shop" className="hero-btn hero-btn-primary" aria-label="Shop Silk Saree Collection">
               Shop Silk Collection
             </Link>
-            <Link to="/shop" className="hero-btn hero-btn-secondary">
+            <Link to="/shop" className="hero-btn hero-btn-secondary" aria-label="Explore Cotton Saree Collection">
               Explore Cotton
             </Link>
           </div>
@@ -74,7 +74,7 @@ const Hero = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
         >
-          <img src={heroImg} alt="Hero Saree" />
+          <img src={heroImg} alt="Model wearing a premium Sridhar Fashions silk saree" fetchpriority="high" width="600" height="800" />
         </motion.div>
       </div>
     </div>

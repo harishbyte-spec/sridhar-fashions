@@ -40,7 +40,7 @@ const CategorySection = () => {
         {categories.slice(0, 3).map((cat, i) => (
           <div key={i} className="accordion-panel">
             <div className="accordion-bg">
-              <img src={cat.url} alt={cat.title} />
+              <img src={cat.url} alt={cat.title} loading="lazy" width="400" height="600" />
               <div className="accordion-overlay"></div>
             </div>
 
@@ -48,7 +48,7 @@ const CategorySection = () => {
               <span className="accordion-num">0{i + 1}</span>
               <h3 className="accordion-panel-title">{cat.title}</h3>
               <div className="accordion-action">
-                <Link to={`/shop?category=${encodeURIComponent(cat.title)}`} className="accordion-link">View Collection</Link>
+                <Link to={`/shop?category=${encodeURIComponent(cat.title)}`} className="accordion-link" aria-label={`View ${cat.title} Collection`}>View Collection</Link>
               </div>
             </div>
           </div>

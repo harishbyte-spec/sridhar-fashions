@@ -27,7 +27,7 @@ export default function PromoSection() {
         <section className="promo-lux-section">
             <div className="promo-lux-container">
                 <div className="promo-image-box">
-                    <img src={promoImg} alt="Accessories" onError={(e) => e.target.src = "/images/placeholder-saree.jpg"} />
+                    <img src={promoImg} alt="Saree Accessories and Blouses" loading="lazy" width="800" height="600" onError={(e) => e.target.src = "/images/placeholder-saree.jpg"} />
                     <div className="promo-image-overlay"></div>
                 </div>
 
@@ -40,7 +40,7 @@ export default function PromoSection() {
                             Complete your look with the perfect finishing touches.
                             Explore our ready-made designer blouses and artisanal accessories designed to elevate your saree.
                         </p>
-                        <Link to="/shop" className="promo-lux-btn">Shop Collection</Link>
+                        <Link to="/shop" className="promo-lux-btn" aria-label="Shop Accessories Collection">Shop Collection</Link>
                     </div>
                 </div>
             </div>

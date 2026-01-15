@@ -34,10 +34,10 @@ export default function OccasionsSection() {
             <div className="occasions-grid">
                 {occasions.map((occ) => (
                     <div key={occ._id} className="occ-card">
-                        <img src={occ.image} alt={occ.name} />
+                        <img src={occ.image} alt={occ.name} loading="lazy" width="400" height="300" />
                         <div className="occ-overlay">
                             <h3>{occ.name}</h3>
-                            <Link to="/shop" state={{ occasion: occ.name }} className="occ-btn">Explore</Link>
+                            <Link to="/shop" state={{ occasion: occ.name }} className="occ-btn" aria-label={`Shop for ${occ.name}`}>Explore</Link>
                         </div>
                     </div>
                 ))}
