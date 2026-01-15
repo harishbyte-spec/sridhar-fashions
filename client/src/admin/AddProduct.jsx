@@ -143,6 +143,10 @@ export default function AddProduct(
         },
       }))
     );
+
+    if (initialData.thumbnail) {
+      setThumbnail({ file: null, preview: initialData.thumbnail });
+    }
   }, [initialData]);
 
 
@@ -269,22 +273,22 @@ export default function AddProduct(
 
   /* ================= TEMPLATE BLOCK ================= */
   const tplBlock = (title, state, setState, list) => (
-    <div className="card">
-      <h2 className="card-title">{title}</h2>
-
-      <div className="source-toggle">
-        <label>
+    <div className="tpl-block-compact" style={{ background: '#f8fafc', padding: '10px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
+      <div className="source-toggle" style={{ display: 'flex', gap: '15px', marginBottom: '8px' }}>
+        <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '13px', fontWeight: '500' }}>
           <input
             type="radio"
             checked={state.type === "custom"}
             onChange={() => setState({ ...state, type: "custom", templateId: "" })}
+            style={{ width: '16px', height: '16px' }}
           /> Custom
         </label>
-        <label>
+        <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '13px', fontWeight: '500' }}>
           <input
             type="radio"
             checked={state.type === "template"}
             onChange={() => setState({ ...state, type: "template" })}
+            style={{ width: '16px', height: '16px' }}
           /> Template
         </label>
       </div>
@@ -301,6 +305,7 @@ export default function AddProduct(
             });
           }}
           className="form-select"
+          style={{ marginBottom: '8px', padding: '6px 10px', fontSize: '13px' }}
         >
           <option value="">Select Template</option>
           {list.map((t) => (
@@ -314,16 +319,24 @@ export default function AddProduct(
         onChange={(e) => setState({ ...state, value: e.target.value })}
         readOnly={state.type === "template"}
         className="form-textarea"
+        style={{ minHeight: '80px', padding: '8px', fontSize: '13px' }}
       />
     </div>
   );
 
   /* ================= FORM VALIDATION ================= */
-  const validateForm = () => {
+  const validateForm = (isDraft = false) => {
     if (!form.title.trim()) {
       toast.error("Product name is required");
       return false;
     }
+    if (!form.productNo.trim()) {
+      toast.error("Product number is required");
+      return false;
+    }
+
+    if (isDraft) return true; // Draft only needs title and productNo
+
     if (!form.price || form.price <= 0) {
       toast.error("Valid price is required");
       return false;
@@ -389,14 +402,15 @@ export default function AddProduct(
   };
 
   /* ================= SUBMIT (FormData) ================= */
-  const handleSubmit = async () => {
+  const handleSubmit = async (status = "published") => {
     // Validate form
-    if (!validateForm()) return;
+    const isDraft = status === "draft";
+    if (!validateForm(isDraft)) return;
 
     try {
       setIsSubmitting(true);
       const loadingToast = toast.loading(
-        mode === "edit" ? "Updating product..." : "Creating product..."
+        isDraft ? "Saving draft..." : (mode === "edit" ? "Updating product..." : "Creating product...")
       );
 
       const token = localStorage.getItem("authToken");
@@ -434,9 +448,10 @@ export default function AddProduct(
       formData.append("washcareTemplateId", washcare.templateId || "");
       formData.append("washcareValue", washcare.value);
 
-      formData.append("notesType", notes.type);
       formData.append("notesTemplateId", notes.templateId || "");
       formData.append("notesValue", notes.value);
+
+      formData.append("status", status);
 
       // 3. Colors Metadata & Files
       // Append Thumbnail
@@ -526,9 +541,9 @@ export default function AddProduct(
       }
 
       toast.success(
-        mode === "edit"
-          ? "Product updated successfully!"
-          : "Product created successfully!",
+        status === "draft"
+          ? "Draft saved successfully!"
+          : (mode === "edit" ? "Product updated successfully!" : "Product published successfully!"),
         { duration: 4000 }
       );
 
@@ -585,10 +600,9 @@ export default function AddProduct(
           <span style={{ color: "#6b7280", fontWeight: "normal", marginLeft: "10px" }}>Products /</span> Add New Product
         </div>
         <div className="header-actions">
-          <button className="btn-draft" disabled={isSubmitting}>Save Draft</button>
           <button
             className="btn-publish"
-            onClick={handleSubmit}
+            onClick={() => handleSubmit("published")}
             disabled={isSubmitting}
             style={{ opacity: isSubmitting ? 0.6 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
           >
@@ -600,338 +614,151 @@ export default function AddProduct(
         </div>
       </div>
 
-      <div className="add-product-layout">
+      <div className="ap-layout-new">
+        <div className="ap-top-row">
+          {/* 1. GENERAL INFORMATION CARD */}
+          <div className="ap-card-new">
+            <h3 className="ap-card-new-title">✨ General Information</h3>
+            <div className="gen-info-grid">
+              <div className="info-fields-stack">
+                <div className="form-group">
+                  <label className="form-label">Product Name</label>
+                  <input
+                    className="form-input"
+                    name="title"
+                    value={form.title}
+                    onChange={onForm}
+                    placeholder="e.g. Kanjivaram Silk Saree"
+                  />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Product Number</label>
+                  <input
+                    className="form-input"
+                    name="productNo"
+                    value={form.productNo}
+                    onChange={onForm}
+                    placeholder="e.g. KSS-001"
+                  />
+                </div>
 
-        {/* LEFT COLUMN (MAIN) */}
-        <div className="ap-main-col">
-
-          {/* 1. GENERAL INFORMATION */}
-          <div className="ap-card">
-            <h3 className="ap-card-title">General Information</h3>
-            <div className="form-group">
-              <label className="form-label">Product Name</label>
-              <input
-                className="form-input"
-                name="title"
-                value={form.title}
-                onChange={onForm}
-                placeholder="e.g. Kanjivaram Silk Saree"
-              />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Product Number</label>
-              <input
-                className="form-input"
-                name="productNo"
-                value={form.productNo}
-                onChange={onForm}
-                placeholder="e.g. KSS-001"
-              />
-            </div>
-            {/* TEMPLATE BLOCKS - Description */}
-            <div className="form-group">
-              <label className="form-label">Description Product</label>
-              {tplBlock("Description", description, setDescription, descTpls)}
-            </div>
-          </div>
-
-          {/* 2. PRICING */}
-          <div className="ap-card">
-            <h3 className="ap-card-title">Pricing</h3>
-            <div className="form-row">
-              <div className="form-group">
-                <label className="form-label">Base Pricing (₹)</label>
-                <input
-                  className="form-input"
-                  name="price"
-                  type="number"
-                  value={form.price}
-                  onChange={onForm}
-                  placeholder="0.00"
-                />
-              </div>
-              <div className="form-group">
-                <label className="form-label">Shipping Time</label>
-                <input
-                  className="form-input"
-                  name="shippingTime"
-                  value={form.shippingTime}
-                  onChange={onForm}
-                  placeholder="e.g. 3-5 Days"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* 3. ADDITIONAL DETAILS (Templates) */}
-          <div className="ap-card">
-            <h3 className="ap-card-title">Additional Details</h3>
-            <div className="form-group">
-              {tplBlock("Measurements", measurement, setMeasurement, measTpls)}
-            </div>
-            <div className="form-group">
-              {tplBlock("Washcare", washcare, setWashcare, washTpls)}
-            </div>
-            <div className="form-group">
-              {tplBlock("Notes", notes, setNotes, noteTpls)}
-            </div>
-          </div>
-
-          {/* 4. COLOR VARIANTS & SAREE PARTS */}
-          <div className="ap-card">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-              <h3 className="ap-card-title" style={{ marginBottom: 0 }}>Color Variants</h3>
-              <button className="btn-draft" onClick={addColor} style={{ padding: "6px 14px", fontSize: "13px" }}>+ Add Color</button>
-            </div>
-
-            {colors.map((c) => (
-              <div key={c.id} className="variants-container">
-                <div className="variant-item">
-                  <div className="form-group full-width">
-                    <label className="form-label">Select Color Template</label>
-                    <select
-                      className="form-select"
-                      onChange={(e) => {
-                        const col = colorTpls.find((x) => x._id === e.target.value);
-                        updateColor(c.id, "colorId", col?._id || "");
-                        updateColor(c.id, "name", col?.colorName || "");
-                        updateColor(c.id, "hexCode", col?.colorHex || "#000000");
-                      }}
-                    >
-                      <option value="">Choose a color...</option>
-                      {colorTpls
-                        .filter(x => x.partType === "main")
-                        .map((x) => (
-                          <option key={x._id} value={x._id}>{x.colorName || x.name || "Unnamed Color"}</option>
-                        ))
-                      }
+                <div className="meta-fields-grid">
+                  <div className="form-group">
+                    <label className="form-label">Category</label>
+                    <select className="form-select" name="category" value={form.category} onChange={onForm}>
+                      <option value="">Select Category</option>
+                      {categories.map((i) => <option key={i._id}>{i.name}</option>)}
                     </select>
                   </div>
-                  <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-                    <input
-                      type="color"
-                      className="variant-color-preview"
-                      value={c.hexCode}
-                      onChange={(e) => updateColor(c.id, "hexCode", e.target.value)}
-                    />
-                    <input
-                      type="text"
-                      className="form-input"
-                      style={{ width: "100px" }}
-                      value={c.hexCode}
-                      onChange={(e) => updateColor(c.id, "hexCode", e.target.value)}
-                    />
+                  <div className="form-group">
+                    <label className="form-label">Collection</label>
+                    <select className="form-select" name="collection" value={form.collection} onChange={onForm}>
+                      <option value="">Select Collection</option>
+                      {collections.map((i) => <option key={i._id}>{i.name}</option>)}
+                    </select>
                   </div>
-                </div>
-
-                {/* --- MAIN IMAGES --- */}
-                <div style={{ padding: "12px", background: "white", borderRadius: "8px", border: "1px solid #e5e7eb", marginBottom: "16px" }}>
-                  <h4 className="form-label" style={{ marginBottom: "12px" }}>Main Product Images</h4>
-
-                  {/* IMAGES */}
-                  <div style={{ marginBottom: "0" }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
-                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#6b7280" }}>Images</span>
-                      <label className="btn-draft" style={{ padding: "4px 12px", fontSize: "12px", cursor: "pointer" }}>
-                        + Add Images
-                        <input type="file" multiple accept="image/*" style={{ display: "none" }} onChange={(e) => handleResourceChange(c.id, "images", e)} />
-                      </label>
-                    </div>
-                    <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                      {c.images.map((img, idx) => (
-                        <div key={idx} style={{ width: "60px", height: "60px", position: "relative", borderRadius: "8px", overflow: "hidden", border: "1px solid #eee" }}>
-                          <img src={img.preview || img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                          <button
-                            onClick={() => removeResource(c.id, "images", idx)}
-                            style={{ position: "absolute", top: 0, right: 0, background: "rgba(0,0,0,0.5)", color: "white", border: "none", width: "20px", height: "20px", fontSize: "12px", cursor: "pointer" }}>×</button>
-                        </div>
-                      ))}
-                      {c.images.length === 0 && <span style={{ fontSize: "12px", color: "#999", fontStyle: "italic" }}>No images selected</span>}
-                    </div>
+                  <div className="form-group">
+                    <label className="form-label">Fabric</label>
+                    <select className="form-select" name="fabric" value={form.fabric} onChange={onForm}>
+                      <option value="">Select Fabric</option>
+                      {fabrics.map((i) => <option key={i._id}>{i.name}</option>)}
+                    </select>
                   </div>
-                </div>
-
-
-                {/* SAREE PARTS GRID */}
-                <h4 className="form-label" style={{ marginTop: "16px" }}>Upload Images (Saree Parts)</h4>
-                <div className="saree-parts-grid">
-                  {["body", "border", "pallu", "blouse"].map((part) => (
-                    <div key={part} className="part-card">
-                      <div className="part-title">{part}</div>
-                      <div className="part-preview-box">
-                        {c.parts[part].preview || c.parts[part].image ? (
-                          <img src={c.parts[part].preview || c.parts[part].image} alt={part} className="part-preview-img" />
-                        ) : (
-                          <span style={{ fontSize: "24px", color: "#d1d5db" }}>📷</span>
-                        )}
-                      </div>
-                      <div className="custom-upload-box">
-                        <input
-                          type="file"
-                          id={`file-${c.id}-${part}`}
-                          accept="image/*"
-                          className="hidden-input"
-                          onChange={(e) => handlePartImageChange(c.id, part, e)}
-                        />
-                        <label htmlFor={`file-${c.id}-${part}`} style={{ fontSize: "12px", color: "#10b981", cursor: "pointer", fontWeight: "600" }}>
-                          {c.parts[part].preview || c.parts[part].image ? "Change" : "Upload"}
-                        </label>
-                      </div>
-
-                      <div style={{ marginTop: "8px" }}>
-                        <select
-                          className="form-select"
-                          style={{ fontSize: '11px', padding: '4px', marginBottom: '8px' }}
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            if (!val) return;
-                            const tpl = colorTpls.find(t => t._id === val);
-                            if (tpl) {
-                              updatePart(c.id, part, { colorHex: tpl.colorHex });
-                            }
-                          }}
-                        >
-                          <option value="">Select Color...</option>
-                          {colorTpls
-                            .filter(t => t.partType === part)
-                            .map(t => (
-                              <option key={t._id} value={t._id}>{t.colorName || t.name}</option>
-                            ))
-                          }
-                        </select>
-                        <div style={{ display: "flex", gap: "4px" }}>
-                          <input
-                            type="color"
-                            style={{ width: "100%", height: "24px", padding: 0, border: "none" }}
-                            value={c.parts[part].colorHex}
-                            onChange={(e) => updatePart(c.id, part, { colorHex: e.target.value })}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* --- VIDEOS --- */}
-                <div style={{ padding: "12px", background: "white", borderRadius: "8px", border: "1px solid #e5e7eb", marginTop: "16px", marginBottom: "16px" }}>
-                  <h4 className="form-label" style={{ marginBottom: "12px" }}>Product Videos</h4>
-                  <div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
-                      <span style={{ fontSize: "13px", fontWeight: "600", color: "#6b7280" }}>Videos</span>
-                      <label className="btn-draft" style={{ padding: "4px 12px", fontSize: "12px", cursor: "pointer" }}>
-                        + Add Video
-                        <input type="file" multiple accept="video/*" style={{ display: "none" }} onChange={(e) => handleResourceChange(c.id, "videos", e)} />
-                      </label>
-                    </div>
-                    <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                      {c.videos.map((vid, idx) => (
-                        <div key={idx} style={{ width: "60px", height: "60px", position: "relative", borderRadius: "8px", overflow: "hidden", border: "1px solid #eee", background: "#000" }}>
-                          <video src={vid.preview || vid} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                          <button
-                            onClick={() => removeResource(c.id, "videos", idx)}
-                            style={{ position: "absolute", top: 0, right: 0, background: "rgba(0,0,0,0.5)", color: "white", border: "none", width: "20px", height: "20px", fontSize: "12px", cursor: "pointer" }}>×</button>
-                        </div>
-                      ))}
-                      {c.videos.length === 0 && <span style={{ fontSize: "12px", color: "#999", fontStyle: "italic" }}>No videos selected</span>}
-                    </div>
+                  <div className="form-group">
+                    <label className="form-label">Origin</label>
+                    <select className="form-select" name="origin" value={form.origin} onChange={onForm}>
+                      <option value="">Select Origin</option>
+                      {origins.map((i) => <option key={i._id}>{i.name}</option>)}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Jari Type</label>
+                    <select className="form-select" name="jariType" value={form.jariType} onChange={onForm}>
+                      <option value="">Select Jari</option>
+                      {jariTypes.map((j) => <option key={j._id} value={j.name}>{j.name}</option>)}
+                    </select>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* RIGHT COLUMN (SIDEBAR) */}
-        <div className="ap-sidebar">
-
-          {/* THUMBNAIL / FEATURED IMAGE */}
-          <div className="ap-card">
-            <h3 className="ap-card-title">Featured Image</h3>
-            <div className="thumbnail-upload-container" style={{ textAlign: "center", border: "2px dashed #e5e7eb", borderRadius: "12px", padding: "20px" }}>
-              {thumbnail.preview ? (
-                <div style={{ position: "relative" }}>
-                  <img src={thumbnail.preview} alt="Thumbnail Preview" style={{ maxWidth: "100%", borderRadius: "8px", maxHeight: "200px" }} />
-                  <button
-                    onClick={() => setThumbnail({ file: null, preview: null })}
-                    style={{ position: "absolute", top: "-10px", right: "-10px", background: "#ef4444", color: "white", border: "none", borderRadius: "50%", width: "24px", height: "24px", cursor: "pointer" }}
-                  >
-                    ×
-                  </button>
+              <div className="featured-image-side">
+                <label className="form-label">Home Page Thumbnail Image</label>
+                <div className="featured-image-upload-box">
+                  {thumbnail.preview ? (
+                    <>
+                      <img src={thumbnail.preview} alt="Thumbnail Preview" className="featured-preview-img" />
+                      <button
+                        className="featured-image-remove"
+                        onClick={() => setThumbnail({ file: null, preview: null })}
+                        aria-label="Remove Image"
+                      >
+                        ×
+                      </button>
+                    </>
+                  ) : (
+                    <label style={{ cursor: "pointer", textAlign: 'center' }}>
+                      <div style={{ fontSize: "48px", marginBottom: "8px" }}>🖼️</div>
+                      <div style={{ fontSize: "14px", fontWeight: "600", color: "#64748b" }}>Add Saree Photo</div>
+                      <div style={{ fontSize: "12px", color: "#94a3b8" }}>Click to browse</div>
+                      <input type="file" accept="image/*" style={{ display: "none" }} onChange={handleThumbnailChange} />
+                    </label>
+                  )}
                 </div>
-              ) : (
-                <label style={{ cursor: "pointer" }}>
-                  <div style={{ fontSize: "36px", color: "#d1d5db", marginBottom: "8px" }}>🖼️</div>
-                  <div style={{ fontSize: "14px", color: "#6b7280", fontWeight: "600" }}>Upload Saree Thumbnail</div>
-                  <div style={{ fontSize: "12px", color: "#9ca3af", marginTop: "4px" }}>Click to browse</div>
-                  <input type="file" accept="image/*" style={{ display: "none" }} onChange={handleThumbnailChange} />
-                </label>
-              )}
+                <p style={{ fontSize: "11px", color: "#94a3b8", marginTop: "12px", fontStyle: "italic", textAlign: 'center' }}>
+                  This image represents the product in the catalog.
+                </p>
+              </div>
             </div>
-            <p style={{ fontSize: "12px", color: "#9ca3af", marginTop: "12px", fontStyle: "italic" }}>
-              This image will be used as the main display in the catalog.
-            </p>
           </div>
 
-          {/* CATEGORY */}
-          <div className="ap-card">
-            <h3 className="ap-card-title">Organization</h3>
+          {/* 2. PRICING & LOGISTICS CARD (With integrated Occasions) */}
+          <div className="ap-card-new">
+            <h3 className="ap-card-new-title">💰 Price & Logistics</h3>
+            <div className="pricing-logistics-grid">
+              <div className="pricing-row-3">
+                <div className="form-group">
+                  <label className="form-label">Base Price (₹)</label>
+                  <input
+                    className="form-input"
+                    name="price"
+                    type="number"
+                    value={form.price}
+                    onChange={onForm}
+                    placeholder="0.00"
+                  />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Shipping Time</label>
+                  <input
+                    className="form-input"
+                    name="shippingTime"
+                    value={form.shippingTime}
+                    onChange={onForm}
+                    placeholder="e.g. 3-5 Days"
+                  />
+                </div>
 
-            <div className="org-section">
-              <div className="form-group" style={{ marginBottom: 0 }}>
-                <label className="form-label">Category</label>
-                <select className="form-select" name="category" value={form.category} onChange={onForm}>
-                  <option value="">Select Category</option>
-                  {categories.map((i) => <option key={i._id}>{i.name}</option>)}
-                </select>
+                <div className="form-group">
+                  <label className="form-label">Silk Mark</label>
+                  <div className="silkmark" style={{ display: "flex", gap: "6px", marginTop: "10px" }}>
+                    <label style={{ display: "flex", alignItems: "center", gap: "4px", cursor: "pointer" }}>
+                      <input type="radio" checked={form.silkMark} onChange={() => setForm({ ...form, silkMark: true })} />
+                      <span style={{ fontSize: '12px' }}>Yes</span>
+                    </label>
+                    <label style={{ display: "flex", alignItems: "center", gap: "4px", cursor: "pointer" }}>
+                      <input type="radio" checked={!form.silkMark} onChange={() => setForm({ ...form, silkMark: false })} />
+                      <span style={{ fontSize: '12px' }}>No</span>
+                    </label>
+                  </div>
+                </div>
               </div>
 
-              <div className="form-group" style={{ marginBottom: 0 }}>
-                <label className="form-label">Collection</label>
-                <select className="form-select" name="collection" value={form.collection} onChange={onForm}>
-                  <option value="">Select Collection</option>
-                  {collections.map((i) => <option key={i._id}>{i.name}</option>)}
-                </select>
-              </div>
-
-              <div className="form-group" style={{ marginBottom: 0 }}>
-                <label className="form-label">Fabric</label>
-                <select className="form-select" name="fabric" value={form.fabric} onChange={onForm}>
-                  <option value="">Select Fabric</option>
-                  {fabrics.map((i) => <option key={i._id}>{i.name}</option>)}
-                </select>
-              </div>
-
-              <div className="form-group" style={{ marginBottom: 0 }}>
-                <label className="form-label">Origin</label>
-                <select className="form-select" name="origin" value={form.origin} onChange={onForm}>
-                  <option value="">Select Origin</option>
-                  {origins.map((i) => <option key={i._id}>{i.name}</option>)}
-                </select>
-              </div>
-
-              {/* Jari Type */}
-              <div className="form-group full-width">
-                <label>Jari Type (Meta)</label>
-                <select
-                  name="jariType"
-                  value={form.jariType} // Assuming form.jariType and onForm are still used, based on original context
-                  onChange={onForm} // Assuming form.jariType and onForm are still used, based on original context
-                >
-                  <option value="">Select Jari</option>
-                  {jariTypes.map((j) => (
-                    <option key={j._id} value={j.name}>
-                      {j.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* OCCASIONS (Multi-select / Checkboxes) */}
-              <div className="form-group full-width">
-                <label>Occasions (Select multiple)</label>
-                <div className="occasions-select" style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', marginTop: '10px' }}>
+              {/* Integrated Occasions */}
+              <div className="form-group" style={{ marginTop: '5px', borderTop: '2px solid #f8fafc', paddingTop: '15px' }}>
+                <label className="form-label" style={{ marginBottom: '12px' }}>🎉 Select Occasions</label>
+                <div className="occasions-select" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   {occasionsList.map((occ) => (
-                    <label key={occ._id} style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', background: '#f5f5f5', padding: '8px 12px', borderRadius: '6px' }}>
+                    <label key={occ._id} style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', background: '#f8fafc', padding: '6px 10px', borderRadius: '8px', border: '1px solid #e2e8f0', transition: 'all 0.2s' }}>
                       <input
                         type="checkbox"
                         checked={(form.occasions || []).includes(occ._id)}
@@ -946,31 +773,190 @@ export default function AddProduct(
                           });
                         }}
                       />
-                      <span style={{ fontSize: '14px' }}>{occ.name}</span>
+                      <span style={{ fontSize: '12px', fontWeight: '500' }}>{occ.name}</span>
                     </label>
                   ))}
                 </div>
               </div>
             </div>
           </div>
-
-          {/* SILK MARK */}
-          <div className="ap-card">
-            <h3 className="ap-card-title">Silk Mark</h3>
-            <div className="silkmark" style={{ display: "flex", gap: "20px" }}>
-              <label style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}>
-                <input type="radio" checked={form.silkMark} onChange={() => setForm({ ...form, silkMark: true })} />
-                <span>Yes</span>
-              </label>
-              <label style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}>
-                <input type="radio" checked={!form.silkMark} onChange={() => setForm({ ...form, silkMark: false })} />
-                <span>No</span>
-              </label>
-            </div>
-          </div>
-
         </div>
 
+        {/* 4. DESCRIPTION & TEMPLATES SECTION */}
+        <div className="ap-card-new">
+          <h3 className="ap-card-new-title">📝 Product Story & Details</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '15px' }}>
+            <div className="form-group">
+              <label className="form-label">Description</label>
+              {tplBlock("Description", description, setDescription, descTpls)}
+            </div>
+            <div className="form-group">
+              <label className="form-label">Measurements</label>
+              {tplBlock("Measurements", measurement, setMeasurement, measTpls)}
+            </div>
+            <div className="form-group">
+              <label className="form-label">Washcare</label>
+              {tplBlock("Washcare", washcare, setWashcare, washTpls)}
+            </div>
+            <div className="form-group">
+              <label className="form-label">Notes</label>
+              {tplBlock("Notes", notes, setNotes, noteTpls)}
+            </div>
+          </div>
+        </div>
+
+        {/* 5. COLOR VARIANTS & SAREE PARTS SECTION */}
+        <div className="ap-card-new shadow-none" style={{ background: 'transparent', padding: 0 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+            <h3 className="ap-card-new-title" style={{ border: 0, padding: 0, margin: 0 }}>🎨 Color Variants & Saree Parts</h3>
+            <button className="btn-publish" onClick={addColor} style={{ padding: "8px 20px", fontSize: "14px" }}>+ Add New Color Variant</button>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            {colors.map((c) => (
+              <div key={c.id} className="ap-card-new" style={{ borderLeft: '6px solid #b49349' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
+                  <div className="variant-item" style={{ border: 0, padding: 0, gap: '15px', flex: 1 }}>
+                    <div className="form-group" style={{ flex: 1, maxWidth: '400px' }}>
+                      <label className="form-label">Base Color Name</label>
+                      <select
+                        className="form-select"
+                        value={c.colorId}
+                        onChange={(e) => {
+                          const col = colorTpls.find((x) => x._id === e.target.value);
+                          updateColor(c.id, "colorId", col?._id || "");
+                          updateColor(c.id, "name", col?.colorName || "");
+                          updateColor(c.id, "hexCode", col?.colorHex || "#000000");
+                        }}
+                      >
+                        <option value="">Choose Template...</option>
+                        {colorTpls.filter(x => x.partType === "main").map((x) => (
+                          <option key={x._id} value={x._id}>{x.colorName || "Unnamed"}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div style={{ display: "flex", gap: "12px", alignItems: "center", marginTop: '22px' }}>
+                      <input
+                        type="color"
+                        className="variant-color-preview"
+                        value={c.hexCode}
+                        onChange={(e) => updateColor(c.id, "hexCode", e.target.value)}
+                        style={{ border: '2px solid #fff', boxShadow: '0 0 0 1px #e2e8f0' }}
+                      />
+                      <input
+                        type="text"
+                        className="form-input"
+                        style={{ width: "100px", textTransform: 'uppercase' }}
+                        value={c.hexCode}
+                        onChange={(e) => updateColor(c.id, "hexCode", e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  {colors.length > 1 && (
+                    <button
+                      className="btn-delete"
+                      style={{ padding: '8px 12px' }}
+                      onClick={() => setColors(prev => prev.filter(x => x.id !== c.id))}
+                    >
+                      Delete Variant
+                    </button>
+                  )}
+                </div>
+
+                <div className="gen-info-grid" style={{ gap: '20px' }}>
+                  {/* LEFT: MEDIA SECTION */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                    <div className="part-card-new">
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+                        <h4 style={{ margin: 0, fontSize: '15px' }}>📸 Front Dual Image</h4>
+                        <label className="btn-draft" style={{ padding: "4px 12px", fontSize: "12px", cursor: "pointer" }}>
+                          Upload
+                          <input type="file" multiple accept="image/*" style={{ display: "none" }} onChange={(e) => handleResourceChange(c.id, "images", e)} />
+                        </label>
+                      </div>
+                      <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                        {c.images.map((img, idx) => (
+                          <div key={idx} style={{ width: "70px", height: "70px", position: "relative", borderRadius: "10px", overflow: "hidden", border: "1px solid #f1f5f9" }}>
+                            <img src={img.preview || img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                            <button
+                              onClick={() => removeResource(c.id, "images", idx)}
+                              style={{ position: "absolute", top: 0, right: 0, background: "rgba(225,29,72,0.8)", color: "white", border: "none", width: "22px", height: "22px", fontSize: "14px", cursor: "pointer" }}>×</button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="part-card-new">
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+                        <h4 style={{ margin: 0, fontSize: '15px' }}>🎥 Product Videos</h4>
+                        <label className="btn-draft" style={{ padding: "4px 12px", fontSize: "12px", cursor: "pointer" }}>
+                          Upload
+                          <input type="file" multiple accept="video/*" style={{ display: "none" }} onChange={(e) => handleResourceChange(c.id, "videos", e)} />
+                        </label>
+                      </div>
+                      <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                        {c.videos.map((vid, idx) => (
+                          <div key={idx} style={{ width: "70px", height: "70px", position: "relative", borderRadius: "10px", overflow: "hidden", background: "#000" }}>
+                            <video src={vid.preview || vid} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                            <button
+                              onClick={() => removeResource(c.id, "videos", idx)}
+                              style={{ position: "absolute", top: 0, right: 0, background: "rgba(225,29,72,0.8)", color: "white", border: "none", width: "22px", height: "22px", fontSize: "14px", cursor: "pointer" }}>×</button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* RIGHT: SAREE PARTS COMPACT */}
+                  <div className="part-card-new" style={{ border: 0, background: '#f8fafc' }}>
+                    <h4 style={{ marginTop: 0, marginBottom: '20px', fontSize: '15px' }}>🧱 Saree Anatomy (Parts)</h4>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                      {["body", "border", "pallu", "blouse"].map((part) => (
+                        <div key={part} style={{ background: '#fff', padding: '12px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                            <span style={{ fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', color: '#64748b' }}>{part}</span>
+                            <label htmlFor={`file-${c.id}-${part}`} style={{ fontSize: '11px', color: '#b49349', fontWeight: '700', cursor: 'pointer' }}>
+                              {c.parts[part].preview || c.parts[part].image ? "CHANGE" : "ADD"}
+                            </label>
+                          </div>
+                          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                            <div style={{ width: '45px', height: '45px', borderRadius: '8px', background: '#f1f5f9', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                              {c.parts[part].preview || c.parts[part].image ? (
+                                <img src={c.parts[part].preview || c.parts[part].image} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={part} />
+                              ) : <span style={{ fontSize: '18px' }}>📸</span>}
+                            </div>
+                            <div style={{ flex: 1 }}>
+                              <select
+                                className="form-select"
+                                style={{ fontSize: '10px', height: '24px', padding: '2px 4px' }}
+                                onChange={(e) => {
+                                  const t = colorTpls.find(x => x._id === e.target.value);
+                                  if (t) updatePart(c.id, part, { colorHex: t.colorHex });
+                                }}
+                              >
+                                <option value="">Color...</option>
+                                {colorTpls.filter(t => t.partType === part).map(t => (
+                                  <option key={t._id} value={t._id}>{t.colorName}</option>
+                                ))}
+                              </select>
+                              <input
+                                type="color"
+                                value={c.parts[part].colorHex}
+                                style={{ width: '100%', height: '10px', marginTop: '4px', padding: 0, border: 'none', borderRadius: '2px' }}
+                                onChange={(e) => updatePart(c.id, part, { colorHex: e.target.value })}
+                              />
+                            </div>
+                          </div>
+                          <input type="file" id={`file-${c.id}-${part}`} accept="image/*" style={{ display: "none" }} onChange={(e) => handlePartImageChange(c.id, part, e)} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

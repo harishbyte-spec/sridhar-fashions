@@ -164,6 +164,7 @@ body {
   transition: transform 0.2s;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .product-card-admin:hover {
@@ -441,13 +442,164 @@ body {
   margin-bottom: 20px;
 }
 
-@media (max-width: 900px) {
-  .template-layout {
+
+/* =========================================================================
+   RE-DESIGNED PRODUCT FORM LAYOUT (FULL SCREEN OPTIMIZED)
+   ========================================================================= */
+
+.add-product-container {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.ap-layout-new {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.ap-top-row {
+  display: grid;
+  grid-template-columns: 1.6fr 1.4fr;
+  gap: 15px;
+  align-items: start;
+}
+
+.ap-card-new {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f1f5f9;
+}
+
+.ap-card-new-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 2px solid #f8fafc;
+  padding-bottom: 8px;
+}
+
+.gen-info-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+}
+
+.info-fields-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Featured Image Compact View */
+.featured-image-upload-box {
+  width: 100%;
+  aspect-ratio: 1/1;
+  max-width: 250px;
+  margin: 0 auto;
+  background: #f8fafc;
+  border: 2px dashed #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.featured-image-upload-box:hover {
+  border-color: #b49349;
+  background: #fff;
+}
+
+.featured-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.featured-image-remove {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+}
+
+/* Pricing & Logistics Section */
+.pricing-logistics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pricing-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.pricing-row-3 {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 16px;
+  align-items: end;
+}
+
+/* Media / Variants section restructuring */
+.media-section-new {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+.part-card-new {
+  background: #fff;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+@media (max-width: 1024px) {
+  .ap-top-row {
     grid-template-columns: 1fr;
   }
 
-  .template-form-section {
-    position: static;
-    margin-bottom: 24px;
+  .gen-info-grid {
+    grid-template-columns: 1fr;
   }
+}
+
+@media (max-width: 768px) {
+
+  .meta-fields-grid,
+  .pricing-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.shadow-none {
+  box-shadow: none !important;
 }

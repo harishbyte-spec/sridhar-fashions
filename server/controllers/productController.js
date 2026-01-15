@@ -11,14 +11,15 @@ export const createProduct = async (req, res) => {
 
     const productData = {
       title: body.title,
-      price: body.price,
+      price: body.price || 0,
       productNo: body.productNo,
-      category: body.category,
-      collection: body.collection,
-      fabric: body.fabric,
+      category: body.category || null,
+      collection: body.collection || null,
+      fabric: body.fabric || null,
       shippingTime: body.shippingTime,
       origin: body.origin,
       jariType: body.jariType,
+      status: body.status || "published",
       silkMark: body.silkMark === "true" || body.silkMark === true,
       occasions: body.occasions ? JSON.parse(body.occasions) : [], // Parse JSON array string
     };
@@ -134,14 +135,15 @@ export const updateProduct = async (req, res) => {
 
     // 1. Basic Fields
     product.title = body.title;
-    product.price = body.price;
+    product.price = body.price || 0;
     product.productNo = body.productNo;
-    product.category = body.category;
-    product.collection = body.collection;
-    product.fabric = body.fabric;
+    product.category = body.category || null;
+    product.collection = body.collection || null;
+    product.fabric = body.fabric || null;
     product.shippingTime = body.shippingTime;
     product.origin = body.origin;
     product.jariType = body.jariType;
+    product.status = body.status || product.status || "published";
     product.silkMark = body.silkMark === "true" || body.silkMark === true;
 
     if (body.occasions) {
@@ -254,8 +256,20 @@ export const updateProduct = async (req, res) => {
 
 /* ================= GET ALL ================= */
 export const getAllProducts = async (req, res) => {
-  const products = await Product.find().sort({ createdAt: -1 });
-  res.json({ success: true, products });
+  try {
+    const { admin } = req.query;
+    let query = {};
+
+    // If not admin, only show published
+    if (admin !== "true") {
+      query.status = "published";
+    }
+
+    const products = await Product.find(query).sort({ createdAt: -1 });
+    res.json({ success: true, products });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
 };
 
 /* ================= GET ONE ================= */

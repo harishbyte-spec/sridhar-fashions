@@ -31,8 +31,8 @@ const sareePartSchema = new mongoose.Schema({
 
 /* ---------------- COLOR VARIANT ---------------- */
 const colorSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  hexCode: { type: String, required: true },
+  name: { type: String, required: false },
+  hexCode: { type: String, required: false },
 
   /* Main Media */
   images: [{ type: String }],
@@ -51,12 +51,18 @@ const colorSchema = new mongoose.Schema({
 const productSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
-    price: { type: Number, required: true },
+    price: { type: Number, default: 0 },
     productNo: { type: String, required: true },
 
-    category: { type: String, required: true },
-    collection: { type: String, required: true },
-    fabric: { type: String, required: true },
+    category: { type: String, required: false },
+    collection: { type: String, required: false },
+    fabric: { type: String, required: false },
+
+    status: {
+      type: String,
+      enum: ["draft", "published"],
+      default: "published",
+    },
 
     occasions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Occasion" }], // New Field
 
@@ -98,4 +104,8 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.Product || mongoose.model("Product", productSchema);
+if (mongoose.models.Product) {
+  delete mongoose.models.Product;
+}
+const Product = mongoose.model("Product", productSchema);
+export default Product;

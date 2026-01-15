@@ -2,9 +2,9 @@
 
 /* Page Container */
 .add-product-container {
-  max-width: 1400px;
+  max-width: 1500px;
   margin: 0 auto;
-  padding: 30px;
+  padding: 15px 30px;
   font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
   color: #1f2937;
 }
@@ -14,7 +14,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .page-title {
@@ -120,22 +120,22 @@
 
 /* Form Groups */
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .form-label {
   display: block;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #4b5563;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 .form-input,
 .form-textarea,
 .form-select {
   width: 100%;
-  padding: 12px 16px;
+  padding: 8px 12px;
   background-color: #f9fafb;
   /* Light gray bg */
   border: 1px solid #e5e7eb;

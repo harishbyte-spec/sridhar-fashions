@@ -7,9 +7,23 @@ import PromoSection from '../components/HomePage/PromoSection';
 import Testimonials from '../components/HomePage/Testimonials';
 import LocationSection from '../components/HomePage/Location';
 import Intro from '../components/IntroAnimation/Intro';
+import API_URL from "../config";
 
 const Home = () => {
   const [showIntro, setShowIntro] = useState(false);
+  const [homeSettings, setHomeSettings] = useState(null);
+
+  useEffect(() => {
+    // Fetch Settings
+    fetch(`${API_URL}/home-settings`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.settings) {
+          setHomeSettings(data.settings);
+        }
+      })
+      .catch(err => console.error("Home settings fetch error", err));
+  }, []);
 
   useEffect(() => {
     const hasSeenIntro = sessionStorage.getItem("introShown");
@@ -27,11 +41,11 @@ const Home = () => {
     <div style={{ paddingTop: "0" }}>
       {showIntro && <Intro onComplete={handleIntroComplete} />}
 
-      <Hero />
+      <Hero settings={homeSettings} />
       <FeaturedProducts />
       <OccasionsSection />
-      <CategorySection />
-      <PromoSection />
+      <CategorySection settings={homeSettings} />
+      <PromoSection settings={homeSettings} />
       <LocationSection />
       <Testimonials />
     </div>

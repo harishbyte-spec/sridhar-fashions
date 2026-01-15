@@ -5,19 +5,11 @@ import { Link } from "react-router-dom";
 import modelImg from "../../assets/model2.png"; // Fallback
 import API_URL from "../../config";
 
-const Hero = () => {
-  const [heroImg, setHeroImg] = useState(modelImg);
+const Hero = ({ settings }) => {
+  // If settings not loaded yet, default to null or loading state
+  // Only fallback to modelImg if settings IS loaded but no URL present
+  const heroImg = settings ? (settings.heroBanner?.url || modelImg) : null;
 
-  useEffect(() => {
-    fetch(`${API_URL}/home-settings`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.settings?.heroBanner?.url) {
-          setHeroImg(data.settings.heroBanner.url);
-        }
-      })
-      .catch(err => console.error("Hero settings fetch error", err));
-  }, []);
 
   return (
     <div className="hero-split-container">

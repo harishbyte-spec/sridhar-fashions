@@ -22,7 +22,7 @@ export default function AdminProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`${API_URL}/products`);
+        const res = await fetch(`${API_URL}/products?admin=true`);
         const data = await res.json();
         if (data.success) setProducts(data.products);
       } catch (err) {

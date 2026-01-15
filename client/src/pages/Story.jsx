@@ -1,5 +1,6 @@
 import React from 'react';
 import './BrandPages.css';
+import silkImg from '../assets/silk saree.jpg';
 
 const Story = () => {
     return (
@@ -12,7 +13,7 @@ const Story = () => {
             <section className="brand-section">
                 <div className="brand-grid">
                     <div className="brand-image-block">
-                        <img src="/images/placeholder-saree.jpg" alt="The Loom" onError={(e) => e.target.src = "https://images.unsplash.com/photo-1598462041242-9969062e249b?auto=format&fit=crop&q=80&w=800"} />
+                        <img src="/images/placeholder-saree.png" alt="The Loom" onError={(e) => e.target.src = "https://images.unsplash.com/photo-1598462041242-9969062e249b?auto=format&fit=crop&q=80&w=800"} />
                     </div>
                     <div className="brand-text-block">
                         <h2>The Craft</h2>
@@ -38,7 +39,7 @@ const Story = () => {
                         </p>
                     </div>
                     <div className="brand-image-block">
-                        <img src="/images/placeholder-saree.jpg" alt="The Weaver" onError={(e) => e.target.src = "https://images.unsplash.com/photo-1510480115228-3e549117edab?auto=format&fit=crop&q=80&w=800"} />
+                        <img src={silkImg} alt="The Weaver" onError={(e) => e.target.src = "https://images.unsplash.com/photo-1510480115228-3e549117edab?auto=format&fit=crop&q=80&w=800"} />
                     </div>
                 </div>
             </section>

@@ -7,27 +7,21 @@ import silkImg from "../../assets/silk saree.jpg";
 import cottonImg from "../../assets/cotton.jpg";
 import silkCottonImg from "../../assets/silk cotton.jpg";
 
-const CategorySection = () => {
-  const [categories, setCategories] = useState([
-    { url: silkImg, title: "Silk Sarees" },
-    { url: cottonImg, title: "Cotton Sarees" },
-    { url: silkCottonImg, title: "Silk-Cotton" }
-  ]);
+const CategorySection = ({ settings }) => {
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_URL}/home-settings`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.settings?.categories) {
-          const mapped = data.settings.categories.map((c, i) => ({
-            url: c.url || [silkImg, cottonImg, silkCottonImg][i],
-            title: c.title || ["Silk Sarees", "Cotton Sarees", "Silk-Cotton"][i]
-          }));
-          setCategories(mapped);
-        }
-      })
-      .catch(err => console.error("Category settings fetch error", err));
-  }, []);
+    if (settings && settings.categories) {
+       const mapped = settings.categories.map((c, i) => ({
+         url: c.url || [silkImg, cottonImg, silkCottonImg][i],
+         title: c.title || ["Silk Sarees", "Cotton Sarees", "Silk-Cotton"][i]
+       }));
+       setCategories(mapped);
+    }
+  }, [settings]);
+
+  // If settings not loaded, return null to avoid flash
+  if (!settings) return <div style={{ height: "400px" }}></div>;
 
   return (
     <section className="collections-accordion-section">

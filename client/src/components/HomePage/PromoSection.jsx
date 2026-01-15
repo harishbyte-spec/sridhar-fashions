@@ -5,23 +5,12 @@ import axios from "axios";
 import promoImgFallback from "../../assets/silk cotton.jpg";
 import API_URL from "../../config";
 
-export default function PromoSection() {
-    const [promoImg, setPromoImg] = useState(promoImgFallback);
+export default function PromoSection({ settings }) {
+    // If settings not loaded, return null or skeleton
+    // This prevents the dummy fallback image from displaying before the real one loads
+    if (!settings) return <div style={{ height: "400px" }}></div>;
 
-    useEffect(() => {
-        const fetchSettings = async () => {
-            try {
-                const res = await fetch(`${API_URL}/home-settings`);
-                const data = await res.json();
-                if (data.settings?.accessorizeImage?.url) {
-                    setPromoImg(data.settings.accessorizeImage.url);
-                }
-            } catch (err) {
-                console.error("Promo image fetch error", err);
-            }
-        };
-        fetchSettings();
-    }, []);
+    const promoImg = settings.accessorizeImage?.url || promoImgFallback;
 
     return (
         <section className="promo-lux-section">
