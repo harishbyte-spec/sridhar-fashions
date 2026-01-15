@@ -322,7 +322,7 @@ export default function Templates() {
           Lock Template (cannot be edited during product creation)
         </label>
 
-        <button className="btn btn-primary" onClick={saveTemplate}>
+        <button className="btn btn-primary" onClick={() => saveTemplate()}>
           Add Template
         </button>
       </div>
