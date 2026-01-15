@@ -1,0 +1,105 @@
+/* Intro.css - Clean Minimalist Luxury */
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease-in-out;
+}
+
+/* Container for Logo */
+.intro-logo-container {
+    text-align: center;
+    opacity: 0;
+    animation: fadeInLogo 1s ease-out forwards;
+}
+
+/* The Logo Text */
+.intro-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: #ef4444;
+    /* Clean Red */
+    margin: 0;
+    letter-spacing: -1px;
+}
+
+.intro-title span {
+    color: #ef4444;
+    /* Clean Red */
+}
+
+/* Sub-text */
+.intro-subtitle {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-top: 15px;
+    opacity: 0;
+    animation: slideUpSub 0.8s ease-out 0.5s forwards;
+}
+
+/* Main Loading Bar (Optional, minimal) */
+.loading-line {
+    width: 0;
+    height: 2px;
+    background: #b49349;
+    margin-top: 30px;
+    animation: loadProgress 2.5s ease-in-out forwards;
+}
+
+/* ANIMATIONS */
+@keyframes fadeInLogo {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUpSub {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes loadProgress {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100px;
+    }
+}
+
+/* EXIT STATE */
+.intro-overlay.exit {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .intro-title {
+        font-size: 2.5rem;
+    }
+}

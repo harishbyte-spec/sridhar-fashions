@@ -1,0 +1,232 @@
+/* adminTemplates.css */
+
+.template-page-container {
+  max-width: 1200px;
+  /* Wider layout */
+  margin: 0 auto;
+}
+
+/* TABS */
+.template-tabs-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+  color: #b49349;
+  background: #fffcf5;
+}
+
+.tab-btn.active {
+  color: #b49349;
+  border-bottom-color: #b49349;
+}
+
+/* LAYOUT WRAPPER */
+.template-wrapper {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  /* Fixed sidebar for form, fluid list */
+  gap: 30px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .template-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* SECTION HEADERS */
+.section-title {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 15px;
+  border-left: 4px solid #b49349;
+  padding-left: 10px;
+}
+
+/* LEFT COLUMN: FORM */
+.template-form-section {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 20px;
+}
+
+.template-input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.template-input-box input,
+.template-input-box textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.template-input-box input:focus,
+.template-input-box textarea:focus {
+  border-color: #b49349;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(180, 147, 73, 0.1);
+}
+
+.template-input-box button {
+  background: #0a2342;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+}
+
+.template-input-box button:hover {
+  background: #153a66;
+}
+
+/* RIGHT COLUMN: LIST */
+.template-list-section {
+  background: transparent;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.template-controls-mini {
+  display: flex;
+  gap: 10px;
+}
+
+.template-controls-mini input,
+.template-controls-mini select {
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.template-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.template-item {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+  border: 1px solid #f1f5f9;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.template-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  border-color: #6366f1;
+  /* Indigo pop */
+}
+
+/* New decorative line */
+.template-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, #6366f1, #a855f7);
+  /* Vibrant gradient */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.template-item:hover::before {
+  opacity: 1;
+}
+
+.template-info {
+  flex: 1;
+  min-width: 0;
+  /* Critical for text truncation */
+  margin-bottom: 12px;
+}
+
+.template-title {
+  font-weight: 600;
+  color: #111;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.template-preview {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.5;
+  /* Multi-line clamp instead of single line */
+  display: -webkit-box;
+  line-clamp: 3; /* Standard property */
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.template-actions {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #f5f5f5;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.btn-danger {
+  background: #fff;
+  border: 1px solid #ff4d4f;
+  color: #ff4d4f;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-danger:hover {
+  background: #ff4d4f;
+  color: white;
+}

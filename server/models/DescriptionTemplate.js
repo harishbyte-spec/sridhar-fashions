@@ -1,0 +1,13 @@
+// models/DescriptionTemplate.js
+import mongoose from "mongoose";
+
+const descriptionSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    isLocked: { type: Boolean, default: false },
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model("DescriptionTemplate", descriptionSchema);

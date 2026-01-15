@@ -1,0 +1,68 @@
+.admin-page {
+  padding: 28px;
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+.admin-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.admin-table {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+  overflow: hidden;
+}
+
+.admin-table-head,
+.admin-table-row {
+  display: grid;
+  grid-template-columns: 80px 1.5fr 1fr 1fr 1fr;
+  align-items: center;
+  padding: 14px 16px;
+}
+
+.admin-table-head {
+  background: #f1f5f9;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.admin-table-row {
+  border-top: 1px solid #e5e7eb;
+}
+
+.admin-table-row img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-edit {
+  padding: 6px 12px;
+  background: #0ea5a7;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.btn-delete {
+  padding: 6px 12px;
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+    

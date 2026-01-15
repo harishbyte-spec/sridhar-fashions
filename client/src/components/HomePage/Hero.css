@@ -1,0 +1,254 @@
+.hero-split-container {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 80px);
+  /* Adjust based on navbar height */
+  min-height: 600px;
+  background-color: #fdfbf7;
+  /* Soft elegant off-white */
+  overflow: hidden;
+}
+
+/* --- LEFT SIDE: CONTENT --- */
+.hero-info-side {
+  flex: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  background: linear-gradient(135deg, #fff 0%, #fdfbf7 100%);
+  position: relative;
+}
+
+.hero-content-v2 {
+  max-width: 580px;
+  z-index: 2;
+}
+
+.hero-tagline {
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #b49349;
+  /* Brand Gold/Brown */
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.hero-title {
+  font-family: "Playfair Display", serif;
+  font-size: 72px;
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0 0 30px;
+  color: #1a1a1a;
+}
+
+.hero-title span {
+  font-style: italic;
+  color: #b49349;
+}
+
+.hero-text {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 40px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 400;
+}
+
+/* --- BUTTONS --- */
+.hero-actions {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 60px;
+}
+
+.hero-btn {
+  padding: 16px 36px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-radius: 4px;
+}
+
+.hero-btn-primary {
+  background: #1a1a1a;
+  color: #fff;
+  border: 1px solid #1a1a1a;
+}
+
+.hero-btn-primary:hover {
+  background: #b49349;
+  border-color: #b49349;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(180, 147, 73, 0.2);
+}
+
+.hero-btn-secondary {
+  background: transparent;
+  color: #1a1a1a;
+  border: 1px solid #1a1a1a;
+}
+
+.hero-btn-secondary:hover {
+  background: #1a1a1a;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+/* --- STATS --- */
+.hero-stats-v2 {
+  display: flex;
+  gap: 50px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.hero-stats-v2 div {
+  text-align: left;
+}
+
+.hero-stats-v2 span {
+  display: block;
+  font-size: 28px;
+  font-family: 'Playfair Display', serif;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+
+.hero-stats-v2 p {
+  margin: 0;
+  color: #888;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+/* --- RIGHT SIDE: VISUAL --- */
+.hero-visual-side {
+  flex: 1;
+  background-color: #f7f2ea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-img-showcase {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-img-showcase img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Use cover for premium full-side look or contain if they want exactly 100% visible */
+  transition: transform 12s ease;
+}
+
+.hero-visual-side:hover .hero-img-showcase img {
+  transform: scale(1.08);
+}
+
+/* Decorative element */
+.hero-visual-side::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 20px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1200px) {
+  .hero-title {
+    font-size: 56px;
+  }
+
+  .hero-info-side {
+    padding: 40px;
+  }
+
+  .hero-stats-v2 {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 992px) {
+  .hero-split-container {
+    flex-direction: column;
+    height: auto;
+    min-height: auto;
+  }
+
+  .hero-info-side {
+    padding: 60px 30px;
+    order: 2;
+  }
+
+  .hero-visual-side {
+    height: 500px;
+    order: 1;
+  }
+
+  .hero-title {
+    font-size: 48px;
+    text-align: center;
+  }
+
+  .hero-text {
+    text-align: center;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-stats-v2 {
+    justify-content: center;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 38px;
+  }
+
+  .hero-visual-side {
+    height: 400px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-stats-v2 {
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-stats-v2 div {
+    text-align: center;
+  }
+}

@@ -1,0 +1,190 @@
+/* BrandPages.css */
+
+.brand-page-container {
+    padding-top: 80px;
+    /* Navbar offset */
+    background-color: #fff;
+    min-height: 100vh;
+}
+
+/* --- HERO SECTION --- */
+.brand-hero {
+    padding: 120px 7vw 80px;
+    background-color: #fdfbf7;
+    text-align: center;
+}
+
+.brand-pre {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 11px;
+    color: #b49349;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.brand-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    color: #1a1a1a;
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+/* --- CONTENT SECTIONS --- */
+.brand-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 100px 40px;
+}
+
+.brand-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.brand-text-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: #1a1a1a;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+.brand-text-block p {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.brand-image-block {
+    position: relative;
+}
+
+.brand-image-block img {
+    width: 100%;
+    height: auto;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+}
+
+.brand-image-block::after {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    border: 1px solid rgba(180, 147, 73, 0.2);
+    z-index: -1;
+}
+
+/* --- CONTACT FORM --- */
+.contact-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 40px;
+}
+
+.contact-form-card {
+    background: #fff;
+    padding: 60px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f1f1;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+.form-group label {
+    display: block;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 15px 0;
+    border: none;
+    border-bottom: 1px solid #eee;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    color: #334155;
+    outline: none;
+    transition: border-color 0.3s ease;
+    background: transparent;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #b49349;
+}
+
+.contact-submit-btn {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 18px 45px;
+    border: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.contact-submit-btn:hover {
+    background: #b49349;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(180, 147, 73, 0.2);
+}
+
+/* --- LEGAL CONTENT --- */
+.legal-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 40px;
+}
+
+.legal-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-top: 50px;
+    margin-bottom: 25px;
+}
+
+.legal-content p,
+.legal-content li {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 992px) {
+    .brand-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .brand-title {
+        font-size: 42px;
+    }
+
+    .contact-form-card {
+        padding: 40px 20px;
+    }
+}

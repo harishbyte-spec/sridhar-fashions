@@ -1,0 +1,161 @@
+.promo-lux-section {
+    padding: 80px 0;
+    background-color: #fdfbf7;
+    overflow: hidden;
+}
+
+.promo-lux-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0 40px;
+}
+
+/* --- IMAGE SIDE --- */
+.promo-image-box {
+    flex: 1.4;
+    height: 600px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+}
+
+.promo-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.promo-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(180, 147, 73, 0.05) 0%, transparent 100%);
+    z-index: 2;
+}
+
+/* --- CONTENT SIDE (OVERLAP) --- */
+.promo-content-card {
+    flex: 1;
+    margin-left: -100px;
+    /* Crucial overlap */
+    z-index: 3;
+    background: #fff;
+    padding: 60px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+/* Decorative Gold Border */
+.promo-content-card::after {
+    content: '';
+    position: absolute;
+    inset: 15px;
+    border: 1px solid rgba(180, 147, 73, 0.2);
+    pointer-events: none;
+}
+
+.promo-card-inner {
+    position: relative;
+    z-index: 4;
+}
+
+.promo-badge {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 11px;
+    color: #b49349;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.promo-lux-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    color: #1a1a1a;
+    line-height: 1.2;
+    margin-bottom: 25px;
+    font-weight: 400;
+}
+
+.promo-lux-line {
+    width: 50px;
+    height: 2px;
+    background: #b49349;
+    margin-bottom: 30px;
+}
+
+.promo-lux-text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+.promo-lux-btn {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 16px 36px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.promo-lux-btn:hover {
+    background: #b49349;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(180, 147, 73, 0.2);
+}
+
+/* --- HOVER EFFECTS --- */
+.promo-lux-container:hover .promo-image-box img {
+    transform: scale(1.05);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1100px) {
+    .promo-lux-container {
+        flex-direction: column;
+        padding: 0 20px;
+    }
+
+    .promo-image-box {
+        width: 100%;
+        height: 400px;
+        order: 1;
+    }
+
+    .promo-content-card {
+        width: 90%;
+        margin-left: 0;
+        margin-top: -60px;
+        /* Vertical overlap on mobile */
+        order: 2;
+        padding: 40px;
+    }
+
+    .promo-lux-title {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 600px) {
+    .promo-content-card {
+        width: 95%;
+        padding: 30px 20px;
+    }
+
+    .promo-lux-title {
+        font-size: 28px;
+    }
+}

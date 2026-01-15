@@ -1,0 +1,137 @@
+/* Overall page background & spacing */
+.fav-page {
+  background: #f7f7f9;
+  min-height: 100vh;
+  padding: 88px 20px 80px;
+}
+
+.fav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Title */
+.fav-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Empty state text */
+.fav-empty-text {
+  margin-bottom: 16px;
+  color: #555;
+}
+
+/* Back links */
+.fav-back-link {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #0a2342;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* Grid layout */
+.fav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+/* Card */
+.fav-card {
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  transition: 0.25s ease;
+}
+
+.fav-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+}
+
+/* ✅ Responsive image with aspect ratio */
+.fav-image-link img {
+  width: 100%;
+  aspect-ratio: 3 / 4;   /* same as shop cards */
+  object-fit: cover;
+  display: block;
+}
+
+/* Info section */
+.fav-info {
+  padding: 14px 16px 16px;
+}
+
+.fav-info h4 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.fav-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #b49349;
+  margin: 4px 0 10px;
+}
+
+/* Actions row */
+.fav-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Remove button */
+.fav-remove-btn {
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  background: #f8d7da;
+  color: #721c24;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* View details button */
+.fav-view-btn {
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  background: #0a2342;
+  color: #ffffff;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  .fav-page {
+    padding: 24px 12px 60px;
+  }
+
+  .fav-title {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .fav-container {
+    max-width: 100%;
+  }
+}
