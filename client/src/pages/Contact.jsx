@@ -82,7 +82,7 @@ const Contact = () => {
               <a href="mailto:sridharfashions@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>
                 sridharfashions@gmail.com
               </a> <br />
-              <a href="https://wa.me/08182405059" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
+              <a href="https://wa.me/8182405059" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
                 081824 05059 (WhatsApp)
               </a>
             </p>

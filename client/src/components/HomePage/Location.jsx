@@ -22,7 +22,7 @@ export default function LocationSection() {
                         </div>
                         <div className="loc-detail-item">
                             <strong>Inquiries:</strong>
-                            <p>081824 05059</p>
+                            <p>81824 05059</p>
                         </div>
                     </div>
                 </div>

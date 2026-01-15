@@ -128,7 +128,7 @@ export default function ProductDetails() {
   const { user, updateUser } = useContext(AuthContext); // user needed for email log
 
   const handleWhatsAppOrder = async () => {
-    const WHATSAPP_NUMBER = "08182405059";
+    const WHATSAPP_NUMBER = "8182405059";
     const message = `Hello, I'm interested in: ${product?.title} (${selectedColor?.displayName}). Price: ₹${product?.price}`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 

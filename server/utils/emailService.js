@@ -125,7 +125,7 @@ export const sendWelcomeEmail = async (userName, userEmail) => {
                 Need help? We're here for you!
               </p>
               <p style="font-size: 13px; color: #8a7b6a; margin: 0;">
-                📧 Contact us anytime | 📱 WhatsApp: +91 081824 05059
+                📧 Contact us anytime | 📱 WhatsApp: +91 81824 05059
               </p>
             </div>
 

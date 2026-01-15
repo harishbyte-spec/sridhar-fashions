@@ -759,8 +759,8 @@ export default function AddProduct(
                     <div key={part} className="part-card">
                       <div className="part-title">{part}</div>
                       <div className="part-preview-box">
-                        {c.parts[part].preview ? (
-                          <img src={c.parts[part].preview} alt={part} className="part-preview-img" />
+                        {c.parts[part].preview || c.parts[part].image ? (
+                          <img src={c.parts[part].preview || c.parts[part].image} alt={part} className="part-preview-img" />
                         ) : (
                           <span style={{ fontSize: "24px", color: "#d1d5db" }}>📷</span>
                         )}
@@ -774,7 +774,7 @@ export default function AddProduct(
                           onChange={(e) => handlePartImageChange(c.id, part, e)}
                         />
                         <label htmlFor={`file-${c.id}-${part}`} style={{ fontSize: "12px", color: "#10b981", cursor: "pointer", fontWeight: "600" }}>
-                          {c.parts[part].preview ? "Change" : "Upload"}
+                          {c.parts[part].preview || c.parts[part].image ? "Change" : "Upload"}
                         </label>
                       </div>
 

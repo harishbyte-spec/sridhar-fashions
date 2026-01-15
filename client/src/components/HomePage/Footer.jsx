@@ -63,8 +63,8 @@ export default function Footer() {
           </div>
           <div className="lux-contact-item">
             <span className="lux-contact-label">Phone</span>
-            <a href="tel:08182405059" style={{ color: 'inherit', textDecoration: 'none' }}>
-              <p>081824 05059</p>
+            <a href="tel:8182405059" style={{ color: 'inherit', textDecoration: 'none' }}>
+              <p>81824 05059</p>
             </a>
           </div>
         </div>
