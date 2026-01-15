@@ -133,13 +133,13 @@ export default function AddProduct(
         colorId: "",
         name: c.name,
         hexCode: c.hexCode,
-        images: [],
-        videos: [],
+        images: c.images || [],
+        videos: c.videos || [],
         parts: {
-          body: initialData.body || {},
-          border: initialData.border || {},
-          pallu: initialData.pallu || {},
-          blouse: initialData.blouse || {},
+          body: c.body || {},
+          border: c.border || {},
+          pallu: c.pallu || {},
+          blouse: c.blouse || {},
         },
       }))
     );
@@ -469,14 +469,33 @@ export default function AddProduct(
           }
         });
 
+        // Helper to separate existing URLs from new Files
+        const existingImages = c.images.filter(img => typeof img === 'string');
+        const existingVideos = c.videos.filter(vid => typeof vid === 'string');
+
         return {
           name: c.name,
           hexCode: c.hexCode,
+          existingImages, // Send existing URLs
+          existingVideos, // Send existing URLs
           parts: {
-            body: { colorHex: c.parts.body.colorHex },
-            border: { colorHex: c.parts.border.colorHex },
-            pallu: { colorHex: c.parts.pallu.colorHex },
-            blouse: { colorHex: c.parts.blouse.colorHex },
+            body: { 
+              colorHex: c.parts.body.colorHex, 
+              // Send existing image URL if it's a string (not a File/Blob) and wasn't replaced
+              image: typeof c.parts.body.image === 'string' ? c.parts.body.image : undefined 
+            },
+            border: { 
+              colorHex: c.parts.border.colorHex,
+              image: typeof c.parts.border.image === 'string' ? c.parts.border.image : undefined
+            },
+            pallu: { 
+              colorHex: c.parts.pallu.colorHex,
+              image: typeof c.parts.pallu.image === 'string' ? c.parts.pallu.image : undefined
+            },
+            blouse: { 
+              colorHex: c.parts.blouse.colorHex,
+              image: typeof c.parts.blouse.image === 'string' ? c.parts.blouse.image : undefined
+            },
           }
         };
       });
