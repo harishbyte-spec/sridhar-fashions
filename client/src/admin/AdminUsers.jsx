@@ -120,7 +120,12 @@ export default function AdminUsers() {
   return (
     <div className="admin-page">
       <div className="admin-top" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <h2 className="admin-title">User Intelligence</h2>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <button onClick={() => window.history.back()} className="back-btn" aria-label="Go Back">
+            ← Back
+          </button>
+          <h2 className="admin-title" style={{ margin: 0 }}>User Intelligence</h2>
+        </div>
         <input
           type="text"
           placeholder="🔍 Search users..."

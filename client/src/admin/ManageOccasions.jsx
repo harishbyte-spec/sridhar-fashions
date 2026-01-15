@@ -126,7 +126,12 @@ export default function ManageOccasions() {
         <div className="manage-occasions-page">
             <div className="admin-header compact-h">
                 <div className="header-lhs">
-                    <h1>Occasions Manager</h1>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                        <button onClick={() => window.history.back()} className="back-btn" aria-label="Go Back">
+                            ← Back
+                        </button>
+                        <h1 style={{ margin: 0 }}>Occasions Manager</h1>
+                    </div>
                     <p>Assign products to events.</p>
                 </div>
                 <button className="btn-vibe-primary sm" onClick={() => setShowCreateModal(true)}>

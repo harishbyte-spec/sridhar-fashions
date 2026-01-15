@@ -446,7 +446,12 @@ export default function Templates() {
           },
         }}
       />
-      <h1 className="admin-title">Template Manager</h1>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '32px' }}>
+        <button onClick={() => window.history.back()} className="back-btn" aria-label="Go Back">
+          ← Back
+        </button>
+        <h1 className="admin-title" style={{ margin: 0 }}>Template Manager</h1>
+      </div>
 
       {/* TABS */}
       <div className="template-tabs-container">

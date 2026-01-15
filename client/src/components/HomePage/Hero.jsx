@@ -44,9 +44,9 @@ const Hero = () => {
             <Link to="/shop" className="hero-btn hero-btn-primary" aria-label="Shop Silk Saree Collection">
               Shop Silk Collection
             </Link>
-            <Link to="/shop" className="hero-btn hero-btn-secondary" aria-label="Explore Cotton Saree Collection">
+            {/* <Link to="/shop" className="hero-btn hero-btn-secondary" aria-label="Explore Cotton Saree Collection">
               Explore Cotton
-            </Link>
+            </Link> */}
           </div>
 
           <div className="hero-stats-v2">

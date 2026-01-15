@@ -64,7 +64,12 @@ export default function AllProducts() {
   return (
     <div className="all-products-page">
       <div className="header-row">
-        <h2>All Products</h2>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <button onClick={() => window.history.back()} className="back-btn" aria-label="Go Back">
+            ← Back
+          </button>
+          <h2 style={{ margin: 0 }}>All Products</h2>
+        </div>
         <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
           <input
             type="text"

@@ -32,7 +32,12 @@ export default function AdminOrders() {
     return (
         <div className="admin-page">
             <div className="admin-top">
-                <h2 className="admin-title">WhatsApp Intent Logs</h2>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <button onClick={() => window.history.back()} className="back-btn" aria-label="Go Back">
+                        ← Back
+                    </button>
+                    <h2 className="admin-title" style={{ margin: 0 }}>WhatsApp Intent Logs</h2>
+                </div>
             </div>
 
             <div className="admin-card" style={{ padding: "30px", background: "white", borderRadius: "24px", boxShadow: "0 10px 40px rgba(0,0,0,0.05)" }}>

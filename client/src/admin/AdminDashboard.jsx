@@ -32,7 +32,12 @@ export default function AdminDashboard() {
     <div className="admin-page">
 
       <div className="admin-top">
-         <h2 className="admin-title">Welcome Back, Admin</h2>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <button onClick={() => window.history.back()} className="back-btn" aria-label="Go Back">
+            ← Back
+          </button>
+          <h2 className="admin-title" style={{ margin: 0 }}>Welcome Back, Admin</h2>
+        </div>
       </div>
 
       <div className="admin-stats-row">
@@ -51,7 +56,7 @@ export default function AdminDashboard() {
           <div className="admin-stat-label">Pending Orders</div>
           <div className="admin-stat-value">0</div>
         </div>
-         <div className="admin-stat-card">
+        <div className="admin-stat-card">
           <div className="admin-stat-label">Revenue</div>
           <div className="admin-stat-value">₹ 0</div>
         </div>

@@ -92,7 +92,12 @@ export default function ManageHome() {
     <div className="manage-home-page">
       <div className="page-header-vibe compact">
         <div className="header-text">
-          <h1>Homepage Visuals</h1>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+            <button onClick={() => window.history.back()} className="back-btn" aria-label="Go Back">
+              ← Back
+            </button>
+            <h1 style={{ margin: 0 }}>Homepage Visuals</h1>
+          </div>
           <p>Manage banners and collections.</p>
         </div>
         <div className="header-badge"><FaHome /> Master Admin</div>

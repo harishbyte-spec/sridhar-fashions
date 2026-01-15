@@ -479,20 +479,20 @@ export default function AddProduct(
           existingImages, // Send existing URLs
           existingVideos, // Send existing URLs
           parts: {
-            body: { 
-              colorHex: c.parts.body.colorHex, 
+            body: {
+              colorHex: c.parts.body.colorHex,
               // Send existing image URL if it's a string (not a File/Blob) and wasn't replaced
-              image: typeof c.parts.body.image === 'string' ? c.parts.body.image : undefined 
+              image: typeof c.parts.body.image === 'string' ? c.parts.body.image : undefined
             },
-            border: { 
+            border: {
               colorHex: c.parts.border.colorHex,
               image: typeof c.parts.border.image === 'string' ? c.parts.border.image : undefined
             },
-            pallu: { 
+            pallu: {
               colorHex: c.parts.pallu.colorHex,
               image: typeof c.parts.pallu.image === 'string' ? c.parts.pallu.image : undefined
             },
-            blouse: { 
+            blouse: {
               colorHex: c.parts.blouse.colorHex,
               image: typeof c.parts.blouse.image === 'string' ? c.parts.blouse.image : undefined
             },
@@ -579,7 +579,10 @@ export default function AddProduct(
       {/* HEADER */}
       <div className="add-product-header">
         <div className="page-title">
-          <span style={{ color: "#6b7280", fontWeight: "normal" }}>Products /</span> Add New Product
+          <button onClick={() => window.history.back()} className="back-btn" aria-label="Go Back">
+            ← Back
+          </button>
+          <span style={{ color: "#6b7280", fontWeight: "normal", marginLeft: "10px" }}>Products /</span> Add New Product
         </div>
         <div className="header-actions">
           <button className="btn-draft" disabled={isSubmitting}>Save Draft</button>

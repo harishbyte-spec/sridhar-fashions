@@ -29,13 +29,13 @@ export default function AdminSareePartTemplates({ partType }) {
 
   const load = async () => {
     try {
-        const res = await authFetch(
+      const res = await authFetch(
         `${API}/saree-parts?type=${partType}`
-        );
-        setList(res.templates || res.items || []);
-    } catch(err) {
-        console.error(err);
-        // toast.error("Failed to load templates");
+      );
+      setList(res.templates || res.items || []);
+    } catch (err) {
+      console.error(err);
+      // toast.error("Failed to load templates");
     }
   };
 
@@ -47,23 +47,23 @@ export default function AdminSareePartTemplates({ partType }) {
     if (!title || !content) return toast.error("Fill all fields");
 
     try {
-        await authFetch(`${API}/saree-parts`, {
+      await authFetch(`${API}/saree-parts`, {
         method: "POST",
         body: JSON.stringify({
-            partType,
-            title,
-            content,
-            isLocked,
+          partType,
+          title,
+          content,
+          isLocked,
         }),
-        });
+      });
 
-        setTitle("");
-        setContent("");
-        setIsLocked(false);
-        load();
-        toast.success("Template created");
+      setTitle("");
+      setContent("");
+      setIsLocked(false);
+      load();
+      toast.success("Template created");
     } catch (err) {
-        toast.error(err.message || "Create failed");
+      toast.error(err.message || "Create failed");
     }
   };
 
@@ -72,22 +72,27 @@ export default function AdminSareePartTemplates({ partType }) {
     if (!window.confirm("Delete template?")) return;
 
     try {
-        await authFetch(`${API}/saree-parts/${id}`, {
+      await authFetch(`${API}/saree-parts/${id}`, {
         method: "DELETE",
-        });
+      });
 
-        load();
-        toast.success("Template deleted");
+      load();
+      toast.success("Template deleted");
     } catch (err) {
-        toast.error("Delete failed");
+      toast.error("Delete failed");
     }
   };
 
   return (
     <div className="admin-page">
-      <h1 className="admin-title">
-        {partType.toUpperCase()} Templates
-      </h1>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '32px' }}>
+        <button onClick={() => window.history.back()} className="back-btn" aria-label="Go Back">
+          ← Back
+        </button>
+        <h1 className="admin-title" style={{ margin: 0 }}>
+          {partType.toUpperCase()} Templates
+        </h1>
+      </div>
 
       {/* CREATE */}
       <div className="card">

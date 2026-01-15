@@ -73,7 +73,12 @@ export default function AdminProducts() {
   return (
     <div className="admin-page">
       <div className="admin-top" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-        <h2 className="admin-title">Product Catalog</h2>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <button onClick={() => window.history.back()} className="back-btn" aria-label="Go Back">
+            ← Back
+          </button>
+          <h2 className="admin-title" style={{ margin: 0 }}>Product Catalog</h2>
+        </div>
         <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
           <input
             type="text"

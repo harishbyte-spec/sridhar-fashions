@@ -89,7 +89,12 @@ export default function Categories() {
   return (
     <div className="admin-page template-page-container">
       <div className="admin-top">
-        <h2 className="admin-title">Manage Categories</h2>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <button onClick={() => window.history.back()} className="back-btn" aria-label="Go Back">
+            ← Back
+          </button>
+          <h2 className="admin-title" style={{ margin: 0 }}>Manage Categories</h2>
+        </div>
       </div>
 
       <div className="template-layout">
