@@ -6,8 +6,8 @@ import { WishlistContext } from "../../context/WishlistContext";
 import { AuthContext } from "../../context/AuthContext";
 import { CurrencyContext } from "../../context/CurrencyContext";
 
-import logone from "../../assets/SF logo.jpeg"
-import logotwo from "../../assets/flo.jpeg"
+import logone from "../../assets/SF_logo-removebg-preview.png"
+import logotwo from "../../assets/SF_logo-removebg-preview.png"
 
 
 
@@ -45,17 +45,15 @@ export default function Navbar() {
         ☰
       </button>
 
-      <div className="Sridhar_Fashions_logo">
-        {/* <img src={logotwo} className="logotwo" alt="logo" /> */}
-        <img src={logone} alt="Sridhar Fashions Logo" width="45px" height="50px" className="SF_logo" loading="eager" />
-      </div>
-
-      {/* LOGO */}
-      <div className="nav-logo">
-        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+      {/* BRAND (Logo + Text) */}
+      <Link to="/" className="nav-brand" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div className="Sridhar_Fashions_logo">
+          <img src={logone} alt="Sridhar Fashions Logo" className="SF_logo" loading="eager" />
+        </div>
+        <div className="nav-logo">
           Sridhar<span> Fashions</span>
-        </Link>
-      </div>
+        </div>
+      </Link>
 
       {/* MAIN LINKS (Desktop) */}
       <div className="nav-links">

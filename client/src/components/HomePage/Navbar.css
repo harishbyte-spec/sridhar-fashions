@@ -232,13 +232,9 @@
 }
 
 .SF_logo {
-  transform: translateX(-50px);
-  position: relative;
-  left: 150px;
-  top: 3px;
-  width: 50px;
-  height: 61px;
-  margin-right: 20px;
+  width: 45px;
+  height: auto;
+  object-fit: contain;
 }
 
 .logotwo {

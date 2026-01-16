@@ -1,6 +1,7 @@
 // src/pages/Login.jsx
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import API_URL from "../config";
 import "./login.css";
 import { AuthContext } from "../context/AuthContext";
@@ -8,6 +9,7 @@ import { AuthContext } from "../context/AuthContext";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -100,20 +102,30 @@ export default function Login() {
 
             <div className="login-label">
               Passcode
-              <input
-                type="password"
-                className="login-input"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <div className="password-input-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="login-input"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  className="password-toggle-btn"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <FiEyeOff /> : <FiEye />}
+                </button>
+              </div>
             </div>
 
             {error && <div className="login-error">{error}</div>}
 
             <button type="submit" className="login-button" disabled={loading}>
-              {loading ? "Verifying..." : "Access Dashboard"}
+              {loading ? "Verifying..." : "Login"}
             </button>
           </form>
 

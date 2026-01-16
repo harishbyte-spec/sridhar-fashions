@@ -183,23 +183,10 @@ export default function Shop() {
           <main className="shop-content">
             <div className="shop-header-row">
               <h2 className="shop-title">Shop Sarees</h2>
-              <div className="header-controls">
-                <select className="sort-select" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-                  <option value="default">Sort</option>
-                  <option value="newest">Newest</option>
-                  <option value="price-asc">Price: Low to High</option>
-                  <option value="price-desc">Price: High to Low</option>
-                </select>
-                <button className="filter-toggle-btn" onClick={toggleDrawer}>Filters</button>
-              </div>
             </div>
-
-            <div className="products-grid">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div className="product-card skeleton" key={i}>
-                  <div className="skeleton-box" />
-                </div>
-              ))}
+            <div className="shop-loading-container">
+              <div className="shop-spinner-large"></div>
+              <div className="shop-loading-text">Discovering Collection...</div>
             </div>
           </main>
         </div>
@@ -214,6 +201,7 @@ export default function Shop() {
         <aside className={`shop-sidebar ${drawerOpen ? "drawer-open" : ""}`} aria-label="Shop filters" role="complementary">
           <div className="sidebar-top">
             <h3 className="filter-head">Filters</h3>
+            <button className="drawer-close-btn" onClick={() => setDrawerOpen(false)} aria-label="Close filters">✕</button>
             {metaLoading ? <div className="meta-spinner" aria-hidden="true" /> : null}
           </div>
 
@@ -258,7 +246,15 @@ export default function Shop() {
         <main className="shop-content">
           <div className="shop-header-row">
             <h2 className="shop-title">Shop Sarees</h2>
-            {/* Controls Removed as per request */}
+            <div className="header-controls">
+              <select className="sort-select" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                <option value="default">Sort</option>
+                <option value="newest">Newest</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+              </select>
+              <button className="filter-toggle-btn" onClick={toggleDrawer}>Filters</button>
+            </div>
           </div>
 
           <div className="products-grid">
@@ -280,67 +276,67 @@ export default function Shop() {
                     <img className="img-hover" src={hoverImage} alt="" loading="lazy" width="300" height="400" onError={handleImgError} />
                   </div>
 
-          <div className="product-info">
-            <h4>{item.title}</h4>
-            <p className="price"><Price amount={item.price} /></p>
+                  <div className="product-info">
+                    <h4>{item.title}</h4>
+                    <p className="price"><Price amount={item.price} /></p>
 
-            <div className="swatches" onClick={(e) => e.preventDefault()}>
-              {(item.colors || []).slice(0, 6).map((c, idx) => (
-                <button
-                  key={c._id || idx}
-                  className={`swatch ${getActiveColor(item)?.name === c.name ? "active" : ""}`}
-                  title={c.name}
-                  onClick={(e) => {
-                    e.preventDefault(); // Prevent navigation
-                    e.stopPropagation();
-                    setSelectedColors({ ...selectedColors, [item._id]: c });
-                  }}
-                  style={{ backgroundColor: c.hexCode || c.hex || "#ccc" }}
-                />
-              ))}
-            </div>
-          </div>
-        </Link>
-        );
+                    <div className="swatches" onClick={(e) => e.preventDefault()}>
+                      {(item.colors || []).slice(0, 6).map((c, idx) => (
+                        <button
+                          key={c._id || idx}
+                          className={`swatch ${getActiveColor(item)?.name === c.name ? "active" : ""}`}
+                          title={c.name}
+                          onClick={(e) => {
+                            e.preventDefault(); // Prevent navigation
+                            e.stopPropagation();
+                            setSelectedColors({ ...selectedColors, [item._id]: c });
+                          }}
+                          style={{ backgroundColor: c.hexCode || c.hex || "#ccc" }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              );
             })}
-      </div>
-
-      {/* Pagination Controls */}
-      {totalPages > 1 && (
-        <div className="shop-pagination">
-          <button
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage(prev => prev - 1)}
-            className="pag-btn"
-          >
-            Previous
-          </button>
-
-          <div className="pag-numbers">
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i + 1}
-                className={`pag-number ${currentPage === i + 1 ? "active" : ""}`}
-                onClick={() => setCurrentPage(i + 1)}
-              >
-                {i + 1}
-              </button>
-            ))}
           </div>
 
-          <button
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage(prev => prev + 1)}
-            className="pag-btn"
-          >
-            Next
-          </button>
-        </div>
-      )}
-    </main>
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="shop-pagination">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(prev => prev - 1)}
+                className="pag-btn"
+              >
+                Previous
+              </button>
+
+              <div className="pag-numbers">
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <button
+                    key={i + 1}
+                    className={`pag-number ${currentPage === i + 1 ? "active" : ""}`}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage(prev => prev + 1)}
+                className="pag-btn"
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </main>
       </div >
 
-    <div className={`drawer-backdrop ${drawerOpen ? "open" : ""}`} onClick={() => setDrawerOpen(false)} />
+      <div className={`drawer-backdrop ${drawerOpen ? "open" : ""}`} onClick={() => setDrawerOpen(false)} />
     </div >
   );
 }

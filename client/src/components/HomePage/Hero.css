@@ -195,13 +195,14 @@
   }
 
   .hero-info-side {
-    padding: 60px 30px;
-    order: 2;
+    padding: 100px 30px 60px;
+    /* Increased top padding */
+    /* order: 2; Removed to keep text on top */
   }
 
   .hero-visual-side {
     height: 500px;
-    order: 1;
+    /* order: 1; Removed to keep image below text */
   }
 
   .hero-title {
@@ -238,7 +239,8 @@
   }
 
   .hero-btn {
-    width: 100%;
+    width: auto;
+    min-width: 200px; /* Ensure decent tap area */
     text-align: center;
   }
 

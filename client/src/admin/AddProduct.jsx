@@ -186,6 +186,21 @@ export default function AddProduct(
         setNoteTpls(note.templates || []);
         setColorTpls(color.colors || []);
 
+        // Attempt to sync existing colors with templates if IDs are missing
+        setColors((prevColors) => {
+          return prevColors.map((c) => {
+            if (!c.colorId && (color.colors || []).length > 0) {
+              // Match primarily on HEX (case-insensitive)
+              const match = (color.colors || []).find(
+                (t) => (t.colorHex || "").toLowerCase() === (c.hexCode || "").toLowerCase()
+              );
+              if (match) {
+                return { ...c, colorId: match._id };
+              }
+            }
+            return c;
+          });
+        });
 
       } catch (e) {
         console.error(e.message);
@@ -830,7 +845,7 @@ export default function AddProduct(
                           updateColor(c.id, "hexCode", col?.colorHex || "#000000");
                         }}
                       >
-                        <option value="">Choose Template...</option>
+                        <option value="">{c.name ? c.name : "Choose Template..."}</option>
                         {colorTpls.filter(x => x.partType === "main").map((x) => (
                           <option key={x._id} value={x._id}>{x.colorName || "Unnamed"}</option>
                         ))}
@@ -853,15 +868,17 @@ export default function AddProduct(
                       />
                     </div>
                   </div>
-                  {colors.length > 1 && (
-                    <button
-                      className="btn-delete"
-                      style={{ padding: '8px 12px' }}
-                      onClick={() => setColors(prev => prev.filter(x => x.id !== c.id))}
-                    >
-                      Delete Variant
-                    </button>
-                  )}
+                  <button
+                    className="btn-delete"
+                    style={{
+                      padding: '8px 12px',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => setColors(prev => prev.filter(x => x.id !== c.id))}
+                    title={"Delete this variant"}
+                  >
+                    Delete Variant
+                  </button>
                 </div>
 
                 <div className="gen-info-grid" style={{ gap: '20px' }}>
