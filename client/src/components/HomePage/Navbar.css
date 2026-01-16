@@ -23,13 +23,21 @@
   align-items: center;
 }
 
+/* Custom Font */
+@font-face {
+  font-family: 'Victoria Cat';
+  src: url('/fonts/VictoriaCAT.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* LOGO */
 .nav-logo {
-  font-size: 28px;
-  font-family: "Playfair Display", serif;
-  font-weight: 700;
+  font-size: 30px;
+  font-family: "Victoria Cat", "Playfair Display", serif;
+  font-weight: 400;
   color: red;
-  letter-spacing: -0.5px;
+  letter-spacing: 0.5px;
   text-decoration: none;
   cursor: pointer;
 }

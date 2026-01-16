@@ -373,6 +373,20 @@
   padding-bottom: 20px;
 }
 
+.pd-acc-content ul {
+  padding-left: 18px;
+  margin: 10px 0;
+  list-style-type: disc;
+}
+
+.pd-acc-content li {
+  margin-bottom: 6px;
+}
+
+.pd-acc-content p {
+  margin-bottom: 12px;
+}
+
 /* Lightbox */
 .lightbox-overlay {
   position: fixed;

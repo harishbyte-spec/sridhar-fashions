@@ -179,6 +179,39 @@ export default function ProductDetails() {
     fetchRelated();
   }, [product]);
 
+  // Helper to format text with bullet points
+  const formatDescription = (text) => {
+    if (!text) return "No details available.";
+
+    // Split by newlines
+    const lines = text.split('\n').filter(line => line.trim() !== "");
+    let html = "";
+    let inList = false;
+
+    lines.forEach(line => {
+      const trimmed = line.trim();
+      // Check if line starts with hyphen or bullet
+      if (trimmed.startsWith("-") || trimmed.startsWith("•") || trimmed.startsWith("*")) {
+        if (!inList) {
+          html += "<ul>";
+          inList = true;
+        }
+        // Remove the bullet char and wrap in li
+        const content = trimmed.substring(1).trim();
+        html += `<li>${content}</li>`;
+      } else {
+        if (inList) {
+          html += "</ul>";
+          inList = false;
+        }
+        html += `<p>${trimmed}</p>`;
+      }
+    });
+
+    if (inList) html += "</ul>";
+    return html;
+  };
+
 
   if (loading) return <div className="pd-page"><div className="pd-container">Loading...</div></div>;
   if (error || !product) return <div className="pd-page"><div className="pd-container">Product Not Found</div></div>;
@@ -303,9 +336,9 @@ export default function ProductDetails() {
             {/* Accordion */}
             <div className="pd-accordion">
               {[
-                { id: 'description', label: 'Description', content: product.descriptionValue },
-                { id: 'measurements', label: 'Measurements', content: product.measurementValue },
-                { id: 'washcare', label: 'Wash Care', content: product.washcareValue },
+                { id: 'description', label: 'Description', content: formatDescription(product.descriptionValue) },
+                { id: 'measurements', label: 'Measurements', content: formatDescription(product.measurementValue) },
+                { id: 'washcare', label: 'Wash Care', content: formatDescription(product.washcareValue) },
                 { id: 'notes', label: 'Notes', content: product.notesValue },
                 {
                   id: 'shipping', label: 'Shipping & Returns', content: `
