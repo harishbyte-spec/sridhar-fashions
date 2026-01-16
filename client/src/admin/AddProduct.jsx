@@ -229,14 +229,11 @@ export default function AddProduct(
     setColors((prev) => prev.map(c => {
       if (c.id !== cid) return c;
       // Create previews
-      const newResources = files.map(f => {
-        console.log("Selected file:", f.name, f.type, f.size); // Debugging
-        return {
-          file: f,
-          preview: URL.createObjectURL(f),
-          name: f.name
-        };
-      });
+      const newResources = files.map(f => ({
+        file: f,
+        preview: URL.createObjectURL(f),
+        name: f.name
+      }));
       return { ...c, [type]: [...c[type], ...newResources] };
     }));
   };
