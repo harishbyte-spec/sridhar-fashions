@@ -10,7 +10,7 @@ const fileFilter = (req, file, cb) => {
     cb(null, true);
   } else {
     const err = new multer.MulterError("LIMIT_UNEXPECTED_FILE");
-    err.message = "Only image/video files are allowed";
+    err.message = `Only image/video files are allowed. Received: ${file.mimetype}`;
     cb(err, false);
   }
 };

@@ -15,7 +15,7 @@ export default function Footer() {
           </p>
           <div className="lux-social-row">
             <a href="https://www.instagram.com/sridharfashionskanchipuram?igsh=ZHpseDAzMzBxcWg%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="lux-social-btn" aria-label="Visit us on Instagram"><FaInstagram /></a>
-            <a href="https://wa.me/918182405059" target="_blank" rel="noopener noreferrer" className="lux-social-btn" aria-label="Chat with us on WhatsApp"><FaWhatsapp /></a>
+            <a href="https://wa.me/918197082919" target="_blank" rel="noopener noreferrer" className="lux-social-btn" aria-label="Chat with us on WhatsApp"><FaWhatsapp /></a>
           </div>
         </div>
 
@@ -63,8 +63,8 @@ export default function Footer() {
           </div>
           <div className="lux-contact-item">
             <span className="lux-contact-label">Phone</span>
-            <a href="tel:8182405059" style={{ color: 'inherit', textDecoration: 'none' }}>
-              <p>81824 05059</p>
+            <a href="tel:918197082919" style={{ color: 'inherit', textDecoration: 'none' }}>
+              <p>+91 81970 82919</p>
             </a>
           </div>
         </div>
