@@ -79,7 +79,7 @@ export default function ProductDetails() {
 
         // Videos -> Type "video"
         if (c.videos && c.videos.length) {
-          c.videos.forEach(vid => typedMedia.push({ src: vid, tag: "Video", type: "video" }));
+          c.videos.forEach(vid => typedMedia.push({ src: addWatermark(vid), tag: "Video", type: "video" }));
         }
 
         // Fallback
