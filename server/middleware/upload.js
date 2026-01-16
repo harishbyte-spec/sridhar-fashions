@@ -25,7 +25,7 @@ const fileFilter = (req, file, cb) => {
   } else {
     const err = new multer.MulterError("LIMIT_UNEXPECTED_FILE");
     // Keep the debug message for now, it's safer
-    err.message = `Only image/video files are allowed. Received: ${file.mimetype}`;
+    err.message = `Only image/video files are allowed. Received: ${file.mimetype}, Name: ${file.originalname}, Ext: ${ext}`;
     cb(err, false);
   }
 };
