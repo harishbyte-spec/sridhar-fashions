@@ -16,6 +16,7 @@ const fileFilter = (req, file, cb) => {
   const ext = path.extname(file.originalname).toLowerCase();
   const allowedExts = [
     ".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg",
+    ".heic", ".heif",
     ".mp4", ".mov", ".webm", ".avi", ".mkv"
   ];
   const isExtAllowed = allowedExts.includes(ext);
@@ -24,8 +25,7 @@ const fileFilter = (req, file, cb) => {
     cb(null, true);
   } else {
     const err = new multer.MulterError("LIMIT_UNEXPECTED_FILE");
-    // Keep the debug message for now, it's safer
-    err.message = `Only image/video files are allowed. Received: ${file.mimetype}, Name: ${file.originalname}, Ext: ${ext}`;
+    err.message = "Only image/video files are allowed";
     cb(err, false);
   }
 };
