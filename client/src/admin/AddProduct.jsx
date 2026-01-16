@@ -231,7 +231,7 @@ export default function AddProduct(
       // Create previews
       const newResources = files.map(f => ({
         file: f,
-        preview: URL.creaturleObjectURL(f),
+        preview: URL.createObjectURL(f),
         name: f.name
       }));
       return { ...c, [type]: [...c[type], ...newResources] };
