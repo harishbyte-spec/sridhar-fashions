@@ -295,6 +295,18 @@ export default function ProductDetails() {
                 <span className="spec-label">TYPE OF JARI</span>
                 <span className="spec-value">{product.jariType || 'Authentic'}</span>
               </div>
+              <div className="pd-spec-item">
+                <span className="spec-label">Category</span>
+                <span className="spec-value">{product.category || 'Authentic'}</span>
+              </div>
+               <div className="pd-spec-item">
+                <span className="spec-label">Collection</span>
+                <span className="spec-value">{product.collection || 'Authentic'}</span>
+              </div>
+               <div className="pd-spec-item">
+                <span className="spec-label">Fabric</span>
+                <span className="spec-value">{product.fabric || 'Authentic'}</span>
+              </div>
             </div>
 
             <div className="pd-price-row">
